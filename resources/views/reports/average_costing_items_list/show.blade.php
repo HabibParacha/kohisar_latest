@@ -30,7 +30,7 @@
                                     <tbody>
                                        
                                         @foreach ($data as $value)
-                                            <tr>
+                                            <tr class="{{ $value['is_low_stock'] ? 'table-danger' : '' }}">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $value['name'] }}</td>
                                                 <td>{{ $value['qty_in'] }}</td>

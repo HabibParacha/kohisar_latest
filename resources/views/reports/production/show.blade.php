@@ -3,7 +3,35 @@
 
 @section('content')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+.table-container{
+    max-height: 450px;      /* Set desired height */
+    overflow-y: auto;       /* Vertical scroll */
+    overflow-x: auto;       /* Horizontal scroll if needed */
+    border: 1px solid #dee2e6;
+}
 
+.table-container table{
+    width: 100%;
+    min-width: 1200px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-container thead th{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #212529 !important;
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* Optional */
+.table-container tbody td{
+    white-space: nowrap;
+}
+</style>
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid ">
@@ -15,23 +43,23 @@
 
                     <div class="col-md-12 ">
                         <div class="card shadow-sm">
-                            <div class="card-body">
+                            <div class="">
                                 <h4 class="card-title mb-4 text-primary"></h4>
-                                <div class="table-responsive mt-4">
-                                    <table id="table" class="table table-hover table-striped align-middle">
+                                <div class="table-container  mt-4">
+                                    <table id="table{{ $loop->index }}" class="table table-hover table-striped align-middle">
                                         <thead class="table-dark">
                                             <tr>
                                                 <th width="5"></th> 
                                                 <th width="100">Name</th> 
-                                                <th width="100">Code</th> 
+                                                {{-- <th width="100">Code</th>  --}}
                                                 {{-- <th width="100">Category</th>  --}}
-                                                <th width="100">Opening Stock</th> 
-                                                <th width="100">Production</th> 
-                                                <th width="100">Total</th> 
-                                                <th width="100">Bags Issued</th> 
-                                                <th width="100">Closing Stock</th> 
-                                                <th width="100">Cumulative Sales</th> 
-                                                <th width="100">Cumulative Production</th> 
+                                                <th class="text-center" width="100">Opening Stock</th> 
+                                                <th class="text-center" width="100">Production</th> 
+                                                <th class="text-center" width="100">Total</th> 
+                                                <th class="text-center" width="100">Bags Issued</th> 
+                                                <th class="text-center" width="100">Closing Stock</th> 
+                                                <th class="text-center" width="100">Cumulative Sales</th> 
+                                                <th class="text-center" width="100">Cumulative Production</th> 
                                             </tr>
                                         </thead>
 
@@ -63,16 +91,16 @@
                                         
                                             <tr>
                                                 <td></td>
-                                                <td>{{ $item['name'] }}</td>
-                                                <td>{{ $item['code'] }}</td>
+                                                <td class="">{{ $item['name'] }}</td>
+                                                {{-- <td>{{ $item['code'] }}</td> --}}
                                                 {{-- <td>{{ $item['category'] }}</td> --}}
-                                                <td class="text-end">{{ ($opeing_stock > 0) ? number_format($opeing_stock, 2) : '-' }}</td>
-                                                <td class="text-end">{{ number_format($item['between_dates_production'], 2) }}</td>
-                                                <td class="text-end">{{ number_format($total, 2) }}</td>
-                                                <td class="text-end">{{ number_format($item['between_dates_sales'], 2) }}</td>
-                                                <td class="text-end">{{ number_format($closing_stock, 2) }}</td>
-                                                <td class="text-end">{{ number_format($item['cumulative_sale'], 2) }}</td>
-                                                <td class="text-end">{{ number_format($item['cumulative_prod'], 2) }}</td>
+                                                <td class="text-center">{{ ($opeing_stock > 0) ? number_format($opeing_stock, 2) : '-' }}</td>
+                                                <td class="text-center">{{ number_format($item['between_dates_production'], 2) }}</td>
+                                                <td class="text-center">{{ number_format($total, 2) }}</td>
+                                                <td class="text-center">{{ number_format($item['between_dates_sales'], 2) }}</td>
+                                                <td class="text-center">{{ number_format($closing_stock, 2) }}</td>
+                                                <td class="text-center">{{ number_format($item['cumulative_sale'], 2) }}</td>
+                                                <td class="text-center">{{ number_format($item['cumulative_prod'], 2) }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -93,15 +121,15 @@
                                                 $sumClosingStock = $sumTotal - $sumBetweenDatesSales;
                                             @endphp
 
-                                            <tr>
-                                                <td colspan="3" class="text-end"><strong>Total for {{ $categoryData['category_name'] }}</strong></td>
-                                                <td class="text-end">{{ ($sumOpeningStock > 0) ? number_format($sumOpeningStock) : '-' }}</td>
-                                                <td class="text-end">{{ number_format($sumBetweenDatesProduction) }}</td>
-                                                <td class="text-end">{{ number_format($sumTotal) }}</td>
-                                                <td class="text-end">{{ number_format($sumBetweenDatesSales) }}</td>
-                                                <td class="text-end">{{ number_format($sumClosingStock) }}</td>
-                                                <td class="text-end">{{ number_format($sumCumulativeSale) }}</td>
-                                                <td class="text-end">{{ number_format($sumCumulativeProd) }}</td>
+                                            <tr class="table-light">
+                                                <td colspan="2" class="text-center"><strong>Total for {{ $categoryData['category_name'] }}</strong></td>
+                                                <td class="text-center fw-bold">{{ ($sumOpeningStock > 0) ? number_format($sumOpeningStock) : '-' }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumBetweenDatesProduction) }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumTotal) }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumBetweenDatesSales) }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumClosingStock) }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumCumulativeSale) }}</td>
+                                                <td class="text-center fw-bold">{{ number_format($sumCumulativeProd) }}</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -114,19 +142,19 @@
                 <!-- Total Summary for All Categories -->
                 <div class="col-md-12 ">
                     <div class="card shadow-sm">
-                        <div class="card-body">
+                        <div class="">
                             <h4 class="card-title mb-4 text-primary">Total Summary for All Categories</h4>
-                            <div class="table-responsive mt-4">
+                            <div class="table-responsive table-scroll mt-2">
                                 <table id="summary-table" class="table table-hover table-striped align-middle">
                                     <thead class="table-dark">
                                         <tr>
-                                            <th class="text-start" width="100">Total Opening Stock</th> 
-                                            <th class="text-end" width="100">Total Production</th> 
-                                            <th class="text-end" width="100">Total</th> 
-                                            <th class="text-end" width="100">Total Bags Issued</th> 
-                                            <th class="text-end" width="100">Total Closing Stock</th> 
-                                            <th class="text-end" width="100">Total Cumulative Sales</th> 
-                                            <th class="text-end" width="100">Total Cumulative Production</th> 
+                                            <th class="text-center" width="100">Total Opening Stock</th> 
+                                            <th class="text-center" width="100">Total Production</th> 
+                                            <th class="text-center" width="100">Total</th> 
+                                            <th class="text-center" width="100">Total Bags Issued</th> 
+                                            <th class="text-center" width="100">Total Closing Stock</th> 
+                                            <th class="text-center" width="100">Total Cumulative Sales</th> 
+                                            <th class="text-center" width="100">Total Cumulative Production</th> 
                                         </tr>
                                     </thead>
 
@@ -154,13 +182,13 @@
                                         @endphp
 
                                         <tr>
-                                            <td class="text-start">{{ number_format($grandTotalOpeningStock) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotalProduction) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotal) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotalBagsIssued) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotalClosingStock) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotalCumulativeSales) }}</td>
-                                            <td class="text-end">{{ number_format($grandTotalCumulativeProduction) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalOpeningStock) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalProduction) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotal) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalBagsIssued) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalClosingStock) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalCumulativeSales) }}</td>
+                                            <td class="text-center">{{ number_format($grandTotalCumulativeProduction) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

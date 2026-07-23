@@ -1,38 +1,38 @@
 <?php
 
+use App\Http\Controllers\AccountReportsController;
 use App\Http\Controllers\Accounts;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\TaxController;
 use App\Http\Controllers\AdminDashboard;
+use App\Http\Controllers\AverageCostingController;
+use App\Http\Controllers\BalanceSheetController;
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChartOfAccountController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\FinishedGoodsStockController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\OpeningBalanceController;
+use App\Http\Controllers\PartialDayBookReportController;
+use App\Http\Controllers\PartyController;
+use App\Http\Controllers\PartyWarehouseController;
+use App\Http\Controllers\ProductionController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RolePermissionsController;
+use App\Http\Controllers\SaleInvoiceController;
+use App\Http\Controllers\SalemanDashboard;
+use App\Http\Controllers\SaleOrderController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BrandController;
-use App\Http\Controllers\PartyController;
-use App\Http\Controllers\RecipeController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\SalemanDashboard;
-use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SessionController;
 use App\Http\Controllers\VoucherController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\SaleOrderController;
 use App\Http\Controllers\WarehouseController;
-use App\Http\Controllers\ProductionController;
-use App\Http\Controllers\SaleInvoiceController;
-use App\Http\Controllers\BalanceSheetController;
-use App\Http\Controllers\PurchaseOrderController;
-use App\Http\Controllers\AccountReportsController;
-use App\Http\Controllers\AverageCostingController;
-use App\Http\Controllers\ChartOfAccountController;
-use App\Http\Controllers\OpeningBalanceController;
-use App\Http\Controllers\PartyWarehouseController;
-use App\Http\Controllers\RolePermissionsController;
-use App\Http\Controllers\FinishedGoodsStockController;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -156,7 +156,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('report/empth-bags-stock',[ReportController::class,'fetchEmptyBagsStock'])->name('report.fetchEmptyBagsStock');    
         
         Route::get('report/production/request', [ReportController::class, 'productionRequest'])->name('report.production.request');
-        Route::post('report/production/show', [ReportController::class, 'productionShow'])->name('report.production.show');
+        Route::get('report/production/show', [ReportController::class, 'productionShow'])->name('report.production.show');
 
 
         Route::get('report/raw-material-history/request', [ReportController::class, 'rawMaterialHistoryRequest'])->name('report.raw-material-history.request');
@@ -174,8 +174,11 @@ Route::middleware(['auth'])->group(function () {
     
     
     Route::get('average-costing/items-list/request', [AverageCostingController::class, 'itemsListRequest'])->name('average-costing.itemsListRequest');
-    Route::post('average-costing/items-list/show', [AverageCostingController::class, 'itemsListShow'])->name('average-costing.itemsListShow');
+    Route::get('average-costing/items-list/show', [AverageCostingController::class, 'itemsListShow'])->name('average-costing.itemsListShow');
 
+
+    Route::get('/partial-day-book-report', [PartialDayBookReportController::class,  'index'])->name('partial-day-book-report.index');
+    Route::get('/partial-day-book-report/print', [PartialDayBookReportController::class,  'print'])->name('partial-day-book-report.print');
 
 
 });

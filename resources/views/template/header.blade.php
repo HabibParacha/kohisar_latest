@@ -64,12 +64,14 @@
 
                         <div class="btn-group">
                             <button type="button" class="  btn btn-outline-light dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">Party Reports <i
+                                data-bs-toggle="dropdown" aria-expanded="false">Quick Books<i
                                     class="mdi mdi-chevron-down"></i></button>
                             <div class="dropdown-menu" style="margin: 0px;">
-
+                                <a class="dropdown-item" href="{{ route('partial-day-book-report.index') }}">Partial Day Book</a>
                             </div>
                         </div><!-- /btn-group -->
+
+                        
 
                         <div class="btn-group">
                             <button type="button" class="btn btn-outline-light dropdown-toggle"

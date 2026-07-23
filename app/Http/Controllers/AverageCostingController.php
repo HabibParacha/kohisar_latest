@@ -15,9 +15,11 @@ class AverageCostingController extends Controller
     }
     public function itemHistoryShow(Request $request)
     {
+        
         $item = Item::find($request->item_id);
         
-        $transactions = InvoiceDetail::where('item_id',$item->id)
+        $transactions = InvoiceDetail::with('item:id,name')
+        ->where('item_id',$item->id)
         ->whereIn('type',['receipt','production'])
         ->where('date','<=',$request->date)
         ->orderBy('date','asc')
@@ -81,12 +83,14 @@ class AverageCostingController extends Controller
 
     public function itemsListShow(Request $request)
     {
+        
         $totalStockValue = 0;
         $items = Item::where('type','Raw')->get();
         $data = [];
         foreach($items as $item)
         {
-            $transactions = InvoiceDetail::where('item_id',$item->id)
+            $transactions = InvoiceDetail::with('item:id,name')
+            ->where('item_id',$item->id)
             ->whereIn('type',['receipt','production'])
             ->where('date','<=',$request->date)
             ->orderBy('date','asc')
@@ -96,6 +100,7 @@ class AverageCostingController extends Controller
             $stock_weight = 0;
             $stock_value = 0;
             $avg_cost = 0;
+            $stock_alert_qty = 0;
            
             
             if($transactions->sum('net_weight') > 0)
@@ -122,6 +127,7 @@ class AverageCostingController extends Controller
                     }
     
                 }
+                $stock_alert_qty = $item->stock_alert_qty != null ? $item->stock_alert_qty  : 0;
                 $data[] =[
                     'name' => $item->name,
                     'qty_in' =>  $transactions->where('type','receipt')->sum('net_weight'),
@@ -129,6 +135,7 @@ class AverageCostingController extends Controller
                     'balance' => number_format($stock_weight, 2),
                     'stock_value' => number_format($stock_weight*$avg_cost, 2),
                     'avg_cost' =>  number_format($avg_cost,2),
+                    'is_low_stock' => $stock_weight <= $stock_alert_qty,
                 ];   
                
                 
@@ -143,6 +150,7 @@ class AverageCostingController extends Controller
                     'balance' => '-',
                     'stock_value' => '-',
                     'avg_cost' =>  '-',
+                    'is_low_stock' =>  '-',
                 ]; 
             }
            
@@ -151,6 +159,7 @@ class AverageCostingController extends Controller
        
         return view('reports.average_costing_items_list.show', compact('data','totalStockValue'));
     }
+
     /*
         //date is required that's why we are using above code 
         public function itemsListShow1(Request $request)

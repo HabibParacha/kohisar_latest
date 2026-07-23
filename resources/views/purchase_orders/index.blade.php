@@ -61,7 +61,7 @@
                                             <th>Receipt No</th>
                                             <th>Reference No</th>
                                             <th>Supplier Name</th>
-                                            <th>Vehcile No</th>
+                                            <th>Vehicle No</th>
                                             <th>Total bags</th>
                                             <th>Shipping</th>
                                             <th>Total Amount</th>

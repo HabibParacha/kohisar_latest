@@ -7,8 +7,7 @@
     <div class="page-content">
         <div class="container-fluid">
         <div class="card">
-            <form action="{{ route('report.production.show') }}" method="POST">
-                @csrf
+            <form action="{{ route('report.production.show') }}" method="get">
                 <div class="card-body">
                     <h4 class="card-title">Production Report</h4>
 

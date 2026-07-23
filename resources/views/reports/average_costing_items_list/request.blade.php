@@ -7,8 +7,7 @@
     <div class="page-content">
         <div class="container-fluid">
         <div class="card">
-            <form action="{{ route('average-costing.itemsListShow') }}" method="POST" target="_blank">
-                @csrf
+            <form action="{{ route('average-costing.itemsListShow') }}" method="GET" target="_blank">
                 <div class="card-body">
                     <h4 class="card-title">Raw Material Average Price List</h4>
 
