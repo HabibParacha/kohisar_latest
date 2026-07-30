@@ -216,21 +216,32 @@ class ReportController extends Controller
     public function rawMaterialHistoryRequest()
     {
         $items = Item::where('type','Raw')->get();
+        $suppliers = Party::whereIn('party_type',['supplier','both'])->get();
 
-        return view('reports.raw_material_history.request', compact('items'));
+        return view('reports.raw_material_history.request', compact('items','suppliers'));
     }
     public function rawMaterialHistroyShow(Request $request)
     {
+        
+        
 
         $startDate = $request->startDate;
         $endDate = $request->endDate;
         $item_id = $request->item_id;
+        $party_id = $request->party_id;
 
-        $receipts = InvoiceDetail::where('item_id', $item_id )
+        $receipts = InvoiceDetail::with('invoiceMaster:id,party_id')
+        ->when($request->party_id , function($query, $partyId){
+            $query->whereHas('invoiceMaster',function($q) use ($partyId){
+                $q->where('party_id', $partyId); 
+            });
+        })
+        ->where('item_id', $item_id )
         ->where('type','receipt')
         ->whereBetween('date',[ $startDate, $endDate])
         ->get();
-        $productions = InvoiceDetail::where('item_id', $item_id )
+        $productions = InvoiceDetail::with('invoiceMaster:id,party_id')
+        ->where('item_id', $item_id )
         ->where('type','production')
         ->whereBetween('date',[ $startDate, $endDate])
         ->get();
@@ -253,17 +264,33 @@ class ReportController extends Controller
     }
     public function materialReceivedHistoryShow(Request $request)
     {
+
         $startDate = $request->startDate;
         $endDate = $request->endDate;
+        $partyId = $request->supplier_id;
+        $itemId = $request->item_id;
+        $totalGrossWeight = 0;
 
         $data = InvoiceMaster::where('type', 'receipt')
-        ->whereBetween('date', [$startDate, $endDate])
-        ->when($request->supplier_id, function ($query) use ($request) {
-            return $query->where('party_id', $request->supplier_id);
-        })
         ->with('invoiceDetails')
+        ->when($request->item_id, function($query) use ($itemId){
+            $query->whereHas('invoiceDetails',function($q) use ($itemId){
+                $q->where('item_id',$itemId);
+            });
+        })
+        ->whereBetween('date', [$startDate, $endDate])
+        ->when($partyId, function ($query) use ($partyId) {
+            return $query->where('party_id', $partyId);
+        })
         ->orderBy('date','asc')
         ->get();
+
+        if ($itemId) {
+            $totalGrossWeight = $data->flatMap->invoiceDetails
+                ->where('item_id', $itemId)
+                ->sum('gross_weight');
+        }
+        return view('reports.material_received_history.pdf', compact('data','startDate','endDate', 'totalGrossWeight'));
         
 
         $pdf = PDF::loadView('reports.material_received_history.pdf', compact('data','startDate','endDate'));

@@ -31,7 +31,7 @@ class VoucherController extends Controller
             if ($request->ajax()) {
 
 
-                $query = Voucher::query()
+                $data = Voucher::query()
                 ->when($request->voucher_type_code, function ($query, $voucherTypeCode) {
                     return $query->where('code', $voucherTypeCode);
                 })
@@ -44,8 +44,6 @@ class VoucherController extends Controller
                 ->orderByDesc('id')
                 ->orderByDesc('date');
 
-
-                $data = $query->get();
     
                 return Datatables::of($data)
                     ->addIndexColumn()

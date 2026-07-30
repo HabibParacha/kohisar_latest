@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InvoiceDetail;
 use App\Models\User;
-
 use Illuminate\Http\Request;
 
 class AdminDashboard extends Controller
@@ -16,14 +16,22 @@ class AdminDashboard extends Controller
      */
     public function __invoke(Request $request)
     {
-
         $total_users = User::count();
-        
 
+        $startOfMonth = date('Y-m-01');
+        $endOfMonth = date('Y-m-t');
+       
+        $totalBagSold = InvoiceDetail::where('type', 'invoice')
+            ->whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->sum('total_quantity');
+
+            
 
         return view('admin_dashboard', 
             compact(
-                'total_users'
-        ));
+                'total_users',
+                'totalBagSold'
+            )
+        );
     }
 }

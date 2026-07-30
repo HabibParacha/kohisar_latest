@@ -7,8 +7,7 @@
     <div class="page-content">
         <div class="container-fluid">
         <div class="card">
-            <form action="{{ route('report.material-received-history.show') }}" method="POST" target="_blank">
-                @csrf
+            <form action="{{ route('report.material-received-history.show') }}" method="get" target="_blank">
                 <div class="card-body">
                     <h4 class="card-title">Raw Material Received History</h4>
 
@@ -31,6 +30,15 @@
                                     <option value="">Choose...</option>
                                     @foreach ($suppliers as $supplier)
                                         <option value="{{ $supplier->id }}">{{ $supplier->business_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group mt-2">
+                                <label for="EndDate">Items</label>
+                                <select id="item_id" name="item_id" class="select2 form-control" style="width: 100%">
+                                    <option value="">Choose...</option>
+                                    @foreach ($items as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

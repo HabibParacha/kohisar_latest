@@ -25,7 +25,9 @@ use App\Http\Controllers\RolePermissionsController;
 use App\Http\Controllers\SaleInvoiceController;
 use App\Http\Controllers\SalemanDashboard;
 use App\Http\Controllers\SaleOrderController;
+use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\SurplusBagsReportController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UnitController;
@@ -160,10 +162,10 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::get('report/raw-material-history/request', [ReportController::class, 'rawMaterialHistoryRequest'])->name('report.raw-material-history.request');
-        Route::post('report/raw-material-history/show', [ReportController::class, 'rawMaterialHistroyShow'])->name('report.raw-material-history.show');
+        Route::get('report/raw-material-history/show', [ReportController::class, 'rawMaterialHistroyShow'])->name('report.raw-material-history.show');
         
         Route::get('report/material-received-history/request', [ReportController::class, 'materialReceivedHistoryRequest'])->name('report.material-received-history.request');
-        Route::post('report/material-received-history/show', [ReportController::class, 'materialReceivedHistoryshow'])->name('report.material-received-history.show');
+        Route::get('report/material-received-history/show', [ReportController::class, 'materialReceivedHistoryshow'])->name('report.material-received-history.show');
         
         Route::get('report/raw-material-stock-level/request', [ReportController::class, 'rawMaterialStockLevelRequest'])->name('report.raw-material-stock-level.request');
         Route::post('report/raw-material-stock-level/show', [ReportController::class, 'rawMaterialStockLevelShow'])->name('report.raw-material-stock-level.show');
@@ -179,7 +181,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/partial-day-book-report', [PartialDayBookReportController::class,  'index'])->name('partial-day-book-report.index');
     Route::get('/partial-day-book-report/print', [PartialDayBookReportController::class,  'print'])->name('partial-day-book-report.print');
+    
+    Route::get('/customer-cummulative-sales/request', [SaleReportController::class, 'customerCummulativeSalesRequest'])
+    ->name('sale-report.customerCummulativeSalesRequest');
+    Route::get('/customer-cummulative-sales/show', [SaleReportController::class, 'customerCummulativeSalesShow'])
+    ->name('sale-report.customerCummulativeSalesShow');
 
+    Route::get('/surplus-bags-cummulative-production/request', [SurplusBagsReportController::class, 'cummulativeProductionRequest'])
+    ->name('surplus-bags-report.cummulativeProductionRequest');
+    Route::get('/surplus-bags-cummulative-production/show', [SurplusBagsReportController::class, 'cummulativeProductionShow'])
+    ->name('surplus-bags-report.cummulativeProductionShow');
 
 });
 

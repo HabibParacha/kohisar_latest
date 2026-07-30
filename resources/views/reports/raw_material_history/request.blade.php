@@ -7,8 +7,7 @@
     <div class="page-content">
         <div class="container-fluid">
         <div class="card">
-            <form action="{{ route('report.raw-material-history.show') }}" method="POST" target="_blank">
-                @csrf
+            <form action="{{ route('report.raw-material-history.show') }}" method="get" target="_blank">
 
                 <div class="card-body">
                     <h4 class="card-title">Raw Material History</h4>
@@ -34,6 +33,18 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group mt-2">
+                                <label class="form-label">Supplier</label>
+                                <select name="party_id"  id="party_id" class="select2 form-control" style="width: 100%">                                                
+                                    <option value="">Choose...</option>
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{$supplier->id}}">
+                                            {{ $supplier->id .'-'.$supplier->business_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
                             
                             <button  class="btn btn-primary my-2" type="submit">Submit</button>
 

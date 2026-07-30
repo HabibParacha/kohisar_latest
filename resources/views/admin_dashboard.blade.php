@@ -47,6 +47,21 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="mini-stats-wid card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        <p class="text-muted fw-medium">Total Bag Sold <small>(This Month)</small> </p>
+                                        <h4 class="mb-0">{{ $totalBagSold }}</h4>
+                                    </div>
+                                    <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon"><span
+                                            class="avatar-title rounded-circle bg-primary"><i
+                                                class="bx bx bx-user-circle font-size-24"></i></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {{-- <div class="col-md-3">
                         <div class="mini-stats-wid card">
                             <div class="card-body">

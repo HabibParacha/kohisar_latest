@@ -68,7 +68,11 @@
                                     class="mdi mdi-chevron-down"></i></button>
                             <div class="dropdown-menu" style="margin: 0px;">
                                 <a class="dropdown-item" href="{{ route('partial-day-book-report.index') }}">Partial Day Book</a>
+                                <a class="dropdown-item" href="{{ route('sale-report.customerCummulativeSalesRequest') }}">Cust. Cumm. Sales</a>
+                                <a class="dropdown-item" href="{{ route('surplus-bags-report.cummulativeProductionRequest') }}">Surplus Bags Cumm. Production</a>
+
                             </div>
+                           
                         </div><!-- /btn-group -->
 
                         
@@ -80,7 +84,7 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('report.fetchFinishedGoodsStock') }}">Finshed Good Stock</a>
                                 <a class="dropdown-item" href="{{ route('report.production.request') }}">Production Report</a>
-                                <a class="dropdown-item" href="{{ route('report.raw-material-history.request') }}">Raw Material History</a>
+                                <a class="dropdown-item" href="{{ route('report.raw-material-history.request') }}">  Raw Material History</a>
                                 <a class="dropdown-item" href="{{ route('report.material-received-history.request') }}">Material Received History</a>
                                 <a class="dropdown-item" href="{{ route('report.raw-material-stock-level.request') }}">Material Stock Level</a>
                                 <a class="dropdown-item" href="{{ route('average-costing.itemHistoryRequest') }}">Item Average History</a>
