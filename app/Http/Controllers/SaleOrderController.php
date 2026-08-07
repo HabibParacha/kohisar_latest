@@ -83,6 +83,8 @@ class SaleOrderController extends Controller
                                             </li> 
                                             ';
                                        }
+                                       if($row->is_lock == 0)
+                                       {
                                        $btn .='
                                            <li>
                                                 <a href="'. route('sale-order.edit', $row->id).'" class="dropdown-item">
@@ -90,7 +92,7 @@ class SaleOrderController extends Controller
                                                 </a>
                                             </li>
                                             ';
-                                       
+                                       }
                                        $btn .='
                                             <li>
                                                 <a href="'.route('sale-order.show',$row->id) .'"  class="dropdown-item">

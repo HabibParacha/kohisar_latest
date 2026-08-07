@@ -47,7 +47,7 @@
             <div class="container-fluid">
                
                 <!-- start page title -->
-                <form id="sale-invoice-store1" action="{{ route('sale-invoice.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="sale-invoice-store" action="{{ route('sale-invoice.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="party_id" value="{{ $saleOrder->party_id }}">
@@ -484,12 +484,29 @@
         
         $('.item-dropdown').each(function(){
             $(this).trigger('change');
-        })
+        });
         // appendNewRow();
 
     });
 
+    // ─── Balance Quantity Validation ─────────────────────────────────────────────
+    // Fires whenever a user types into the "Quantity" column.
+    // If the entered quantity exceeds the balance_quantity for that row,
+    // show an alert and reset the field to 0.
+    $(document).on('input change', '.item-total-quantity', function () {
+        var $input       = $(this);
+        var enteredQty   = parseFloat($input.val()) || 0;
+        var $row         = $input.closest('tr');
+        var balanceQty   = parseFloat($row.find('.item-total-balance').val()) || 0;
 
+        if (enteredQty > balanceQty) {
+            notyf.error({
+                message: 'Quantity (' + enteredQty + ') exceeds the available balance (' + balanceQty + ') for this item.',
+                duration: 4000
+            });
+            $input.val(0).trigger('change');
+        }
+    });
 
 </script>
 

@@ -271,7 +271,7 @@ class SaleInvoiceController extends Controller
 
         if($request->has('sale_order_id') && $request->input('sale_order_id') != null)
         {
-            $this->updateSaleOrderStatus($request->input('sale_order_id'));
+            $this->updateSaleOrderStatusAndDetailBalance($request->input('sale_order_id'));
             
         }
 
@@ -828,12 +828,44 @@ class SaleInvoiceController extends Controller
     }
 
 
-    private function updateSaleOrderStatus($sale_order_id)
+    private function updateSaleOrderStatusAndDetailBalance($sale_order_id)
     {
         $saleOrder = InvoiceMaster::find($sale_order_id);
-        if ($saleOrder) {
-            $saleOrder->is_lock = 1; // Lock the sale order
-            $saleOrder->save();
+
+        if (!$saleOrder) {
+            return;
         }
+
+        // Get all IDs of sale invoices that were created from this sale order
+        $invoiceIds = DB::table('invoice_master')
+            ->where('sale_order_id', $sale_order_id)
+            ->where('type', 'invoice')
+            ->pluck('id');
+
+        // Load each detail row of the sale order
+        $saleOrderDetails = DB::table('invoice_detail')
+            ->where('invoice_master_id', $sale_order_id)
+            ->get();
+
+        foreach ($saleOrderDetails as $orderDetail) {
+            // Sum quantity dispatched for this specific item across all linked sale invoices
+            $soldQty = DB::table('invoice_detail')
+                ->whereIn('invoice_master_id', $invoiceIds)
+                ->where('item_id', $orderDetail->item_id)
+                ->sum('total_quantity');
+
+            $balanceQty = max(0, $orderDetail->total_quantity - $soldQty);
+
+            DB::table('invoice_detail')
+                ->where('id', $orderDetail->id)
+                ->update([
+                    'sold_quantity'    => $soldQty,
+                    'balance_quantity' => $balanceQty,
+                ]);
+        }
+
+        // Lock the sale order once at least one invoice has been raised against it
+        $saleOrder->is_lock = 1;
+        $saleOrder->save();
     }
 }
