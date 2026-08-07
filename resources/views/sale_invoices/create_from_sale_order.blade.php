@@ -47,7 +47,7 @@
             <div class="container-fluid">
                
                 <!-- start page title -->
-                <form id="sale-invoice-store" action="{{ route('sale-invoice.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="sale-invoice-store" action="{{ route('sale-order-invoice.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="party_id" value="{{ $saleOrder->party_id }}">
@@ -62,7 +62,7 @@
                                     <h4 class="card-title mb-4">Sale Invoice</h4>
         
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Invoice No</label>
                                                 <div class="input-group">
@@ -72,7 +72,7 @@
                                                 </div> 
                                             </div> 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Date</label>
                                                 <div class="input-group">
@@ -83,7 +83,7 @@
                                             </div> 
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Customers</label>
                                                 <input type="text" class="form-control" value="{{ $saleOrder->party->business_name }}" readonly>
@@ -91,7 +91,7 @@
                                             </div>                                        
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Farm / Warehouse</label>
                                                 <div class="input-group">
@@ -108,7 +108,7 @@
                                         </div>
 
                                         
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Vehicle No</label>
                                                 <div class="input-group">
@@ -117,12 +117,40 @@
                                                 </div> 
                                             </div> 
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="mb-3">
                                                 <label class="form-label">Reference No</label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><span class="bx bxs-spreadsheet" ></span> </div>
                                                     <input type="text" name="reference_no" value="{{ $saleOrder->invoice_no }}" class="form-control" readonly>
+                                                </div> 
+                                            </div> 
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Contact Person</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-text"><span class="bx bxs-user" ></span> </div>
+                                                    <input type="text" name="contact_person" value="{{ $saleOrder->contact_person }}" class="form-control" readonly>
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Person Phone</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-text"><span class="bx bxs-user" ></span> </div>
+                                                    <input type="text" name="contact_person_phone" value="{{ $saleOrder->contact_person_phone }}" class="form-control" readonly>
+                                                </div> 
+                                            </div> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mb-3">
+                                                <label class="form-label">Custom Notes</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-text"><span class="bx bxs-note" ></span> </div>
+                                                    <input type="text" name="custom_notes" value="{{ $saleOrder->custom_notes }}" class="form-control">
                                                 </div> 
                                             </div> 
                                         </div>
@@ -306,6 +334,7 @@
 
                                     <tfoot>
                                         <tr>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -517,7 +546,7 @@
         let createformData = new FormData(this);
         $.ajax({
             type: "POST",
-            url: "{{ route('sale-invoice.store') }}",
+            url: "{{ route('sale-order-invoice.store') }}",
             dataType: 'json',
             contentType: false,
             processData: false,

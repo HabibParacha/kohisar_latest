@@ -131,60 +131,55 @@
                 order: [[0, 'desc']],
             });
 
+            // ── Unified delete handler ──────────────────────────────────────────────
+            // 'route-type' data attribute is set by the helper functions below.
+            // 'order-linked' → SaleOrderInvoiceController::destroy (syncs order balance)
+            // 'direct'       → SaleInvoiceController::destroy (no order involved)
             $('#submit-sale-invoice-destroy').click(function() {
                 let invoice_master_id = $(this).data('id');
-                var submit_btn = $('#submit-sale-invoice-destroy');
+                let routeType         = $(this).data('route-type');
+                var submit_btn        = $(this);
+
+                let deleteUrl = routeType === 'order-linked'
+                    ? "{{ route('sale-order-invoice.destroy', ':id') }}".replace(':id', invoice_master_id)
+                    : "{{ route('sale-invoice.destroy', ':id') }}".replace(':id', invoice_master_id);
 
                 $.ajax({
                     type: 'DELETE',
-                    url: "{{ route('sale-invoice.destroy', ':id') }}".replace(':id', invoice_master_id), // Using route name
-                    data: {
-                        _token: "{{ csrf_token() }}" // Add CSRF token
-                    },
+                    url: deleteUrl,
+                    data: { _token: "{{ csrf_token() }}" },
                     beforeSend: function() {
-                            submit_btn.prop('disabled', true);
-                            submit_btn.html('Processing');
-                        },
+                        submit_btn.prop('disabled', true).html('Processing');
+                    },
                     success: function(response) {
-                        
-                        submit_btn.prop('disabled', false).html('Delete');  
-
-                        if(response.success == true){
-                            $('#delete-sale-invoice').modal('hide'); 
+                        submit_btn.prop('disabled', false).html('Delete');
+                        if (response.success == true) {
+                            $('#delete-sale-invoice').modal('hide');
                             table.ajax.reload();
-                        
-                            notyf.success({
-                                message: response.message, 
-                                duration: 3000
-                            });
-                        }else{
-                            notyf.error({
-                                message: response.message,
-                                duration: 5000
-                            });
-                        }   
+                            notyf.success({ message: response.message, duration: 3000 });
+                        } else {
+                            notyf.error({ message: response.message, duration: 5000 });
+                        }
                     },
                     error: function(e) {
                         submit_btn.prop('disabled', false).html('Delete');
-                    
-                        notyf.error({
-                            message: e.responseJSON.message,
-                            duration: 5000
-                        });
+                        notyf.error({ message: e.responseJSON.message, duration: 5000 });
                     }
                 });
             });
         });
+
+        // For regular sale invoices (no sale order)
         function deleteSaleInvoice(id) {
-            $('#submit-sale-invoice-destroy').data('id', id);
+            $('#submit-sale-invoice-destroy').data('id', id).data('route-type', 'direct');
             $('#delete-sale-invoice').modal('show');
         }
 
-
-        
-
-        
-        
+        // For invoices created from a sale order
+        function deleteSaleOrderInvoice(id) {
+            $('#submit-sale-invoice-destroy').data('id', id).data('route-type', 'order-linked');
+            $('#delete-sale-invoice').modal('show');
+        }
     </script>
 
-@endsection    
+@endsection

@@ -58,6 +58,14 @@ class SaleInvoiceController extends Controller
                    
 
                     ->addColumn('action', function ($row) {
+                        $editRoute   = $row->sale_order_id
+                            ? route('sale-order-invoice.edit', $row->id)
+                            : route('sale-invoice.edit', $row->id);
+
+                        $deleteJs    = $row->sale_order_id
+                            ? "deleteSaleOrderInvoice({$row->id})"
+                            : "deleteSaleInvoice({$row->id})";
+
                         $btn = '
                             <div class="d-flex align-items-center col-actions">
                                 <div class="dropdown">
@@ -71,13 +79,13 @@ class SaleInvoiceController extends Controller
                                             </a>
                                         </li>
                                          <li>
-                                            <a href="'. route('sale-invoice.edit', $row->id).'" class="dropdown-item">
+                                            <a href="'. $editRoute .'" class="dropdown-item">
                                                 <i class="bx bx-pencil font-size-16 text-warning me-1"></i> Edit
                                             </a>
                                         </li>
                                          
                                         <li>
-                                            <a href="javascript:void(0)" onclick="deleteSaleInvoice(' . $row->id . ')" class="dropdown-item">
+                                            <a href="javascript:void(0)" onclick="'. $deleteJs .'" class="dropdown-item">
                                                 <i class="bx bx-trash font-size-16 text-danger me-1"></i> Delete
                                             </a>
                                         </li>

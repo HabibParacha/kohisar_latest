@@ -23,6 +23,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolePermissionsController;
 use App\Http\Controllers\SaleInvoiceController;
+use App\Http\Controllers\SaleOrderInvoiceController;
 use App\Http\Controllers\SalemanDashboard;
 use App\Http\Controllers\SaleOrderController;
 use App\Http\Controllers\SaleReportController;
@@ -107,8 +108,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('sale-order', SaleOrderController::class);
 
-    Route::get('sale-order/{id}/create-sale-invoice', [SaleInvoiceController::class, 'createFromSaleOrder'])->name('sale-invoice.createFromSaleOrder');
+    // Sale invoices created directly (no sale order)
     Route::resource('sale-invoice', SaleInvoiceController::class);
+
+    // Sale invoices created from a sale order — handled by a dedicated controller
+    // so that edit/delete always keep the order balance in sync
+    Route::get('sale-order/{saleOrderId}/invoice/create', [SaleOrderInvoiceController::class, 'create'])
+        ->name('sale-order-invoice.create');
+    Route::resource('sale-order-invoice', SaleOrderInvoiceController::class)
+        ->only(['store', 'edit', 'update', 'destroy']);
 
     Route::get('production/posting/{id}', [ProductionController::class, 'posting'])->name('production.posting');
     Route::get('production/unposting/{id}', [ProductionController::class, 'unposting'])->name('production.unposting');

@@ -45,10 +45,8 @@ class SaleOrderController extends Controller
                 ->when($request->has('saleman_id') && $request->saleman_id != NULL, function ($query) use ($request) {
                     return $query->where('saleman_id', $request->saleman_id);
                 })
-                ->orderBy('id', 'desc')
                 ->orderBy('date', 'desc')
-                ->get();
-    
+                ->orderBy('id', 'desc');
                 return Datatables::of($data)
                     ->addIndexColumn()
                     // Status toggle column
@@ -77,7 +75,7 @@ class SaleOrderController extends Controller
                                        {
                                         $btn .='   
                                             <li>
-                                                <a href="'. route('sale-invoice.createFromSaleOrder', $row->id).'" class="dropdown-item">
+                                                <a href="'. route('sale-order-invoice.create', $row->id).'" class="dropdown-item">
                                                     <i class="bx bx-plus font-size-16 text-secondary me-1"></i> Sale Invoice
                                                 </a>
                                             </li> 
