@@ -51,7 +51,7 @@
                                     <tr>
                                         <th width="5%" class="ps-3">#</th>
                                         <th width="40%">Name</th>
-                                        <th class="text-center">Net Weight</th>
+                                        {{-- <th class="text-center">Net Weight</th> --}}
                                         <th class="text-center pe-3">Total Quantity</th>
                                     </tr>
                                 </thead>
@@ -67,9 +67,9 @@
                                         <tr>
                                             <td class="ps-3">{{ $sr++ }}</td>
                                             <td>{{ $row->item }}</td>
-                                            <td class="text-center">
+                                            {{-- <td class="text-center">
                                                 {{ number_format($row->net_weight, 0) }}
-                                            </td>
+                                            </td> --}}
                                             <td class="text-center pe-3">
                                                 {{ number_format($row->total_quantity, 0) }}
                                             </td>
@@ -79,9 +79,9 @@
                                 <tfoot>
                                     <tr class="table-light fw-bold">
                                         <td colspan="2" class="text-end pe-3">Category Total</td>
-                                        <td class="text-center">
+                                        {{-- <td class="text-center">
                                             {{ number_format($categoryWeight, 0) }}
-                                        </td>
+                                        </td> --}}
                                         <td class="text-center pe-3">
                                             {{ number_format($categoryQuantity, 0) }}
                                         </td>
@@ -103,15 +103,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="border rounded-3 p-4 text-center bg-light">
                                 <div class="text-muted small mb-1">Total Net Weight</div>
                                 <div class="fs-3 fw-bold text-primary">
                                     {{ number_format($grandWeight, 0) }}
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> --}}
+                        <div class="col-md-12">
                             <div class="border rounded-3 p-4 text-center bg-light">
                                 <div class="text-muted small mb-1">Total Quantity</div>
                                 <div class="fs-3 fw-bold text-success">

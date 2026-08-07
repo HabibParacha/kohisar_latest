@@ -47,11 +47,12 @@
             <div class="container-fluid">
                
                 <!-- start page title -->
-                <form id="sale-invoice-store" action="{{ route('sale-invoice.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="sale-invoice-store1" action="{{ route('sale-invoice.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="party_id" value="{{ $saleOrder->party_id }}">
                     <input type="hidden" name="saleman_id" value="{{ $saleOrder->saleman_id }}">
+                    <input type="hidden" name="sale_order_id" value="{{ $saleOrder->id }}">
 
                     <div class="row">
                         <div class="col-md-8">
@@ -95,16 +96,12 @@
                                                 <label class="form-label">Farm / Warehouse</label>
                                                 <div class="input-group">
                                                     <select name="party_warehouse_id" id="" class="form-control select2" style="width:100%">
-                                                        <option value="">Choose...</option>
-                                                        @foreach ($partyWarehouses as $warehouse)
+                                                        {{-- @foreach ($partyWarehouses as $warehouse)
 
-                                                        <option 
-                                                        
-                                                        
-
-                                                        value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
+                                                        <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
                                                             
-                                                        @endforeach
+                                                        @endforeach --}}
+                                                         <option value="{{ $saleOrder->party_warehouse_id }}">{{ $saleOrder->partyWarehouse->name }}</option>
                                                     </select>
                                                 </div> 
                                             </div> 
@@ -199,6 +196,7 @@
                                             <th  width="200" class="text-start" >Item</th> 
                                             <th  width="50" class="text-center">Unit wgt.</th> 
                                             <th  width="50" class="text-center">Stock Bal.</th> 
+                                            <th  width="50" class="text-center">Ord. Bal.</th> 
                                             <th  width="50" class="text-center">Qty</th> 
                                             <th  width="100" class="text-center">Total  wgt.</th> 
                                             <th  width="50" class="text-center">Unit Price</th> 
@@ -248,8 +246,12 @@
                                                 <td class="text-end">
                                                     <input type="number" name="unit_weight[]" step="0.0001" class=" text-end form-control item-unit-weight" readonly>  
                                                 </td>
+                                                
                                                 <td class="text-end">
                                                     <input type="number"  step="0.0001" class=" text-end form-control item-stock-balance" readonly>  
+                                                </td>
+                                                <td class="text-end">
+                                                    <input type="number" name="balance_quantity[]" value="{{ $detail->balance_quantity }}" step="0.0001" class=" text-end form-control item-total-balance" readonly>  
                                                 </td>
                                                 <td class="text-end">
                                                     <input type="number" name="total_quantity[]" step="0.0001" class=" text-end form-control item-total-quantity" >  

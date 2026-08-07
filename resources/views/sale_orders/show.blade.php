@@ -17,24 +17,38 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="invoice-title">
-                            <h4 class="float-end font-size-16">Date: {{ date('d-m-Y',strtotime($saleOrder->date)) }}</h4>
+                            <h4 class="float-end font-size-16">Date: {{ date('d-m-Y', strtotime($saleOrder->date)) }}</h4>
                             <div class="auth-logo mb-4">
-                             
+
                                 <h4># {{ $saleOrder->invoice_no }}</h4>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <!-- Left Side -->
+                            <div class="col-md-6">
                                 <address>
-                                    <h5>Billed To:</h5><br>
-                                   <span class="fw-bold">Customer: </span>  {{ $saleOrder->party->business_name }}<br>
-                                   <span class="fw-bold">Contact: </span> {{ $saleOrder->party->mobile}}<br>
-                                   <span class="fw-bold">City: </span> {{  $saleOrder->party->city  }}<br>
-                                   <span class="fw-bold">Address: </span>{{  $saleOrder->party->address_line_1 }}
+                                    <h5>Billed To:</h5>
+
+                                    <span class="fw-bold">Customer:</span> {{ $saleOrder->party->business_name }}<br>
+                                    <span class="fw-bold">Contact:</span> {{ $saleOrder->party->mobile }}<br>
+                                    <span class="fw-bold">City:</span> {{ $saleOrder->party->city }}<br>
+                                    <span class="fw-bold">Address:</span> {{ $saleOrder->party->address_line_1 }} <br>
+                                    <span class="fw-bold">Custom Notes:</span> {{ $saleOrder->custom_notes }}
                                 </address>
                             </div>
-                            
+
+                            <!-- Right Side -->
+                            <div class="col-md-6 text-md-end">
+                                <address>
+                                    <h5>Contact Person</h5>
+
+                                    <span class="fw-bold">Name:</span> {{ $saleOrder->contact_person }}<br>
+                                    <span class="fw-bold">Phone:</span>
+                                    {{ $saleOrder->contact_person_phone }}<br>
+                                    
+                                </address>
+                            </div>
                         </div>
                         {{-- <div class="row">
                             <div class="col-sm-6 mt-3">
@@ -63,43 +77,51 @@
                                         <th style="width:15%" class="text-end">Unit Weight</th>
                                         <th style="width:15%" class="text-end">Qty</th>
                                         <th style="width:15%" class="text-end">Total Weight</th>
-                                      
+                                        <th style="width:15%" class="text-end">Sold Qty</th>
+                                        <th style="width:15%" class="text-end">Balance Qty</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
-                                        $i=1;
+                                        $i = 1;
                                     @endphp
                                     @foreach ($saleOrder->invoiceDetails as $detail)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $detail->item->category->name.'-'.$detail->item->name }}</td>
+                                            <td>{{ $detail->item->category->name . '-' . $detail->item->name }}</td>
                                             <td class="text-end">{{ $detail->unit_weight }}</td>
                                             <td class="text-end">{{ $detail->total_quantity }}</td>
                                             <td class="text-end">{{ $detail->net_weight }}</td>
-                                            
+                                            <td class="text-end">{{ $detail->sold_quantity }}</td>
+                                            <td class="text-end">{{ $detail->balance_quantity }}</td>
+
                                         </tr>
                                     @endforeach
 
                                     <tr>
                                         <td colspan="3">
                                             <b> Total</b>
-                                         </td>
-                                        <td style="text-align: right">
-                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('total_quantity'),2) }}</b>
                                         </td>
                                         <td style="text-align: right">
-                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('net_weight'),2) }}</b>
+                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('total_quantity'), 2) }}</b>
                                         </td>
-                                        <td colspan="4" ></td>
-                                       
-                                       
+                                        <td style="text-align: right">
+                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('net_weight'), 2) }}</b>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('sold_quantity'), 2) }}</b>
+                                        </td>
+                                        <td style="text-align: right">
+                                            <b>{{ number_format($saleOrder->invoiceDetails->sum('balance_quantity'), 2) }}</b>
+                                        </td>
+
                                     </tr>
-                                  
+
                                 </tbody>
                             </table>
                         </div>
-                       
+
                     </div>
                 </div>
 

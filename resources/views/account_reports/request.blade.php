@@ -21,7 +21,7 @@
                     </div>
                 </div>
                
-                <form action="" method="post" name="form" id="form">
+                <form action="" method="get" name="form" id="form">
                     <div>
                         <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -97,7 +97,6 @@
                     <div class="card">
                         <div class="card-body">
                         <!-- enctype="multipart/form-data" -->
-                            @csrf
                             @if ($errors->any())
                                 <div class="alert alert-danger" role="alert" id="error-alert">
                                     {{ $errors->first() }}

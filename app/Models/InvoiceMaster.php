@@ -81,6 +81,10 @@ class InvoiceMaster extends Model
         'attachment',
 
         'is_lock',
+
+        'contact_person',
+        'contact_person_phone',
+        'custom_notes',
     ];
 
 

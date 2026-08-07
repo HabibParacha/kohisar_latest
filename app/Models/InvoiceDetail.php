@@ -25,6 +25,8 @@ class InvoiceDetail extends Model
         'cut_value',
         'after_cut_total_weight',
         'total_quantity',
+        'sold_quantity',
+        'balance_quantity',
         'per_package_weight',
         'total_package_weight',
         'net_weight',

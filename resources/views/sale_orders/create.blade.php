@@ -70,6 +70,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
+                                        <label class="form-label">Farm / Warehouse</label>
+                                        <select name="party_warehouse_id"  id="party_warehouse_id" class="select2 form-control">                                                
+                                            
+                                        </select>
+                                    </div>                                        
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
                                         <label class="form-label">Saleman</label>
                                         <select name="saleman_id"  id="saleman_id" class="select2 form-control" >                                                
                                             <option value="">Choose...</option>
@@ -104,6 +112,35 @@
                                        
                                     </div> 
                                 </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="contact_person" id="contact_person" class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person Phone</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="contact_person_phone" id="contact_person_phone" class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Custom Notes</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="custom_notes" id="custom_notes" class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+
                                
                                 
                               
@@ -220,6 +257,51 @@
       
         appendNewRow();
 
+    });
+
+    $(document).ready(function () {
+        $('#party_id').on('select2:select', function(e){
+            e.preventDefault();
+
+            let party_id = $(this).find('option:selected').val();
+
+            var warehouseDropdown = $('#party_warehouse_id');
+            
+            $.ajax({
+                url: `{{ route('party-warehouse.fetchList','') }}/${party_id}`,
+                type: 'GET',
+                beforeSend: function() {
+                    warehouseDropdown.append('<option value="">Loading...</option>');
+                },
+                success: function(data) {
+                    warehouseDropdown.empty(); // Clear current options
+                    console.log(data);
+
+                    warehouseDropdown.append('<option selected value="">Choose...</option>');
+                    
+                    // Check if data is empty
+                    if (data.length === 0) {
+                        warehouseDropdown.append('<option disabled>No records found</option>');
+                    } else {
+                        // Append the new items
+                        $.each(data, function(index, warehouse) {
+                            warehouseDropdown.append(new Option(warehouse.name, warehouse.id));
+                        });
+                    }
+
+                    // Close the dropdown
+                    warehouseDropdown.select2('close');
+                    // Notify select2 about the change
+                    warehouseDropdown.trigger('change');
+                    warehouseDropdown.select2('open');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                    alert('Failed to load items. Please try again.'); // Optional user feedback
+                }
+            });
+            
+        });
     });
 
        //  Detect Enter key in input fields

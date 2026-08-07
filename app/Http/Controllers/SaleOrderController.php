@@ -84,6 +84,14 @@ class SaleOrderController extends Controller
                                             ';
                                        }
                                        $btn .='
+                                           <li>
+                                                <a href="'. route('sale-order.edit', $row->id).'" class="dropdown-item">
+                                                    <i class="bx bx-pencil font-size-16 text-secondary me-1"></i> Edit
+                                                </a>
+                                            </li>
+                                            ';
+                                       
+                                       $btn .='
                                             <li>
                                                 <a href="'.route('sale-order.show',$row->id) .'"  class="dropdown-item">
                                                     <i class="bx bx-show font-size-16 text-primary me-1"></i> View
@@ -157,6 +165,8 @@ class SaleOrderController extends Controller
        
         $validator = Validator::make($request->all(), [
             'party_id' => 'required',
+            'party_warehouse_id' =>'required',
+
             'item_id.*' =>'required',
             'total_quantity.*' =>'required',
             // 'per_unit_price.*' =>'required',
@@ -192,9 +202,14 @@ class SaleOrderController extends Controller
               'type' => 'sale_order',
               'party_id' => $request->input('party_id'),
               'saleman_id' => $request->input('saleman_id'),
+              'party_warehouse_id' => $request->input('party_warehouse_id'),
+
               'sub_total' => $request->input('sub_total'),
               'grand_total' => $request->input('grand_total'),
               'description' => $request->input('description'),
+              'contact_person' => $request->input('contact_person'),
+              'contact_person_phone' => $request->input('contact_person_phone'),
+              'custom_notes' => $request->input('custom_notes'),
           ];
 
           
@@ -221,7 +236,11 @@ class SaleOrderController extends Controller
                   'type' => 'sale_order',
                   'item_id' => $request->item_id[$i],
                   'unit_weight' => $request->unit_weight[$i],
+                  
                   'total_quantity' => $request->total_quantity[$i],
+                  'sold_quantity' => 0,
+                  'balance_quantity' => $request->total_quantity[$i],//same as total quantity for new sale order
+                  
                   'net_weight' => $request->net_weight[$i],
 
                   'per_unit_price' => $request->per_unit_price[$i],
@@ -320,13 +339,13 @@ class SaleOrderController extends Controller
             'party_id' => 'required',
             'item_id.*' =>'required',
             'total_quantity.*' =>'required',
-            'per_unit_price.*' =>'required',
+            // 'per_unit_price.*' =>'required',
         ],
         [
             'party_id.required' => 'The Supplier is required.',
             'item_id.*.required' => 'Each item is required.',
             'total_quantity.*.required' => 'Quantity is required for all items.',
-            'per_unit_price.*.required' => 'Per Kg price is required for each item.',
+            // 'per_unit_price.*.required' => 'Per Kg price is required for each item.',
         ]);
     
 
@@ -348,9 +367,14 @@ class SaleOrderController extends Controller
               'date' => $request->input('date'),
               'party_id' => $request->input('party_id'),
               'saleman_id' => $request->input('saleman_id'),
+              'party_warehouse_id' => $request->input('party_warehouse_id'),
+
               'sub_total' => $request->input('sub_total'),
               'grand_total' => $request->input('grand_total'),
               'description' => $request->input('description'),
+              'contact_person' => $request->input('contact_person'),
+              'contact_person_phone' => $request->input('contact_person_phone'),
+              'custom_notes' => $request->input('custom_notes'),
           ];
 
              
@@ -387,7 +411,14 @@ class SaleOrderController extends Controller
                     'type' => $invoiceMaster->type,
                     'item_id' => $request->item_id[$i],
                     'unit_weight' => $request->unit_weight[$i],
+
                     'total_quantity' => $request->total_quantity[$i],
+                    'sold_quantity' => 0,
+                    //same as total quantity for new sale order because 
+                    // when sale invoice is created it will not be available for edit
+                    'balance_quantity' => $request->total_quantity[$i],
+                    
+                    
                     'net_weight' => $request->net_weight[$i],
 
                     'per_unit_price' => $request->per_unit_price[$i],

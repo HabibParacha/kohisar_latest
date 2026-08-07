@@ -125,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('balance-sheet/request', [BalanceSheetController::class, 'request'])->name('balance-sheet.request');
-    Route::post('balance-sheet/show', [BalanceSheetController::class, 'show'])->name('balance-sheet.show');
+    Route::get('balance-sheet/show', [BalanceSheetController::class, 'show'])->name('balance-sheet.show');
     
     Route::get('party-warehouse/fetch-list/{party_id}', [PartyWarehouseController::class, 'fetchList'])->name('party-warehouse.fetchList');
     Route::resource('party-warehouse', PartyWarehouseController::class);
@@ -138,17 +138,17 @@ Route::middleware(['auth'])->group(function () {
 
     // START::Account Section 
         Route::get('account-reports/request', [AccountReportsController::class, 'request'])->name('account-reports.request');
-        Route::post('account-reports/voucher-pdf', [AccountReportsController::class, 'voucherPDF'])->name('account-reports.voucherPDF');
-        Route::post('account-reports/cashbook-pdf', [AccountReportsController::class, 'cashbookPDF'])->name('account-reports.cashbookPDF');
-        Route::post('account-reports/general-ledger-pdf', [AccountReportsController::class, 'generalLedgerPDF'])->name('account-reports.generalLedgerPDF');
-        Route::post('account-reports/daybook-pdf', [AccountReportsController::class, 'daybookPDF'])->name('account-reports.daybookPDF');
-        Route::post('account-reports/trial-balance-pdf', [AccountReportsController::class, 'trialBalancePDF'])->name('account-reports.trialBalancePDF');
-        Route::post('account-reports/customer-balance-pdf', [AccountReportsController::class, 'customerBalancePDF'])->name('account-reports.customerBalancePDF');
-        Route::post('account-reports/supplier-balance-pdf', [AccountReportsController::class, 'supplierBalancePDF'])->name('account-reports.supplierBalancePDF');
-        Route::post('account-reports/expense-pdf', [AccountReportsController::class, 'expensePDF'])->name('account-reports.expensePDF');
-        Route::post('account-reports/customer-ledger-pdf', [AccountReportsController::class, 'customerLedgerPDF'])->name('account-reports.customerLedgerPDF');
-        Route::post('account-reports/supplier-ledger-pdf', [AccountReportsController::class, 'supplierLedgerPDF'])->name('account-reports.supplierLedgerPDF');
-        Route::post('account-reports/balance-sheet-pdf', [AccountReportsController::class, 'balanceSheetPDF'])->name('account-reports.balanceSheetPDF');
+        Route::get('account-reports/voucher-pdf', [AccountReportsController::class, 'voucherPDF'])->name('account-reports.voucherPDF');
+        Route::get('account-reports/cashbook-pdf', [AccountReportsController::class, 'cashbookPDF'])->name('account-reports.cashbookPDF');
+        Route::get('account-reports/general-ledger-pdf', [AccountReportsController::class, 'generalLedgerPDF'])->name('account-reports.generalLedgerPDF');
+        Route::get('account-reports/daybook-pdf', [AccountReportsController::class, 'daybookPDF'])->name('account-reports.daybookPDF');
+        Route::get('account-reports/trial-balance-pdf', [AccountReportsController::class, 'trialBalancePDF'])->name('account-reports.trialBalancePDF');
+        Route::get('account-reports/customer-balance-pdf', [AccountReportsController::class, 'customerBalancePDF'])->name('account-reports.customerBalancePDF');
+        Route::get('account-reports/supplier-balance-pdf', [AccountReportsController::class, 'supplierBalancePDF'])->name('account-reports.supplierBalancePDF');
+        Route::get('account-reports/expense-pdf', [AccountReportsController::class, 'expensePDF'])->name('account-reports.expensePDF');
+        Route::get('account-reports/customer-ledger-pdf', [AccountReportsController::class, 'customerLedgerPDF'])->name('account-reports.customerLedgerPDF');
+        Route::get('account-reports/supplier-ledger-pdf', [AccountReportsController::class, 'supplierLedgerPDF'])->name('account-reports.supplierLedgerPDF');
+        Route::get('account-reports/balance-sheet-pdf', [AccountReportsController::class, 'balanceSheetPDF'])->name('account-reports.balanceSheetPDF');
     // END::Account Section
 
     // START::Inventory Section 

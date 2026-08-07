@@ -190,6 +190,8 @@ class AccountReportsController extends Controller
 
 
         $journals = $query->get(); 
+
+        return view('account_reports.general_ledger_pdf', compact('coaName','journals','broughtForward'));
         
         $pdf = PDF::loadView('account_reports.general_ledger_pdf', compact('coaName','journals','broughtForward'));
         $pdf->setpaper('A4', 'landscape');

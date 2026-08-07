@@ -7,8 +7,7 @@
     <div class="page-content">
         <div class="container-fluid">
         <div class="card col-md-12">
-            <form action="{{ route('balance-sheet.show') }}" method="POST" target="_blank">
-                @csrf
+            <form action="{{ route('balance-sheet.show') }}" method="get" target="_blank">
 
                 <div class="card-body">
                     <h4 class="card-title">Balance Sheet</h4>

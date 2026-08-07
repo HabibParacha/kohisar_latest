@@ -124,7 +124,7 @@ class SaleInvoiceController extends Controller
     // passing sale order id as parameter
     public function createFromSaleOrder($id)
     {
-      
+
         $saleOrder = InvoiceMaster::with('invoiceDetails')->find($id);
         $newInvoiceNo = InvoiceMaster::generateInvoiceNo('INV','invoice');
         $partyWarehouses = PartyWarehouse::where('party_id',$saleOrder->party_id)->get();
@@ -143,6 +143,7 @@ class SaleInvoiceController extends Controller
      */
     public function store(Request $request)
     {
+    
         $validator = Validator::make($request->all(), [
             'party_id' =>'required',
             'party_warehouse_id' =>'required',
@@ -177,6 +178,7 @@ class SaleInvoiceController extends Controller
           $invoice_master = [
                 'date' => $request->input('date'),
                 'invoice_no' => $newInvoiceNo,
+                'sale_order_id' => $request->input('sale_order_id') ?? null,
                 'type' => 'invoice',
                 'party_id' => $request->input('party_id'),
                 'saleman_id' => $request->input('saleman_id'),
@@ -265,6 +267,13 @@ class SaleInvoiceController extends Controller
             $request, $newInvoiceNo, $invoice_master_id, 
             $newVoucherNo, $voucher_type->code,$voucher_type->name 
         );
+
+
+        if($request->has('sale_order_id') && $request->input('sale_order_id') != null)
+        {
+            $this->updateSaleOrderStatus($request->input('sale_order_id'));
+            
+        }
 
           DB::commit();// Commit the transaction
 
@@ -751,7 +760,6 @@ class SaleInvoiceController extends Controller
 
             }
         }
-            
 
 
       
@@ -817,5 +825,15 @@ class SaleInvoiceController extends Controller
 
       
 
+    }
+
+
+    private function updateSaleOrderStatus($sale_order_id)
+    {
+        $saleOrder = InvoiceMaster::find($sale_order_id);
+        if ($saleOrder) {
+            $saleOrder->is_lock = 1; // Lock the sale order
+            $saleOrder->save();
+        }
     }
 }

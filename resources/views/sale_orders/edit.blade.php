@@ -74,6 +74,15 @@
                                         </select>
                                     </div>                                        
                                 </div>
+                                 <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Farm / Warehouse</label>
+                                        <select name="party_warehouse_id"  id="party_warehouse_id" class="select2 form-control">                                                
+                                            <option 
+                                            value="{{ $invoice_master->party_warehouse_id }}">{{ $invoice_master->partyWarehouse->name }}</option>
+                                        </select>
+                                    </div>                                        
+                                </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label class="form-label">Saleman</label>
@@ -111,6 +120,34 @@
                                        
                                     </div> 
                                 </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="contact_person" id="contact_person" class="form-control" value="{{ $invoice_master->contact_person }}">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person Phone</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="contact_person_phone" id="contact_person_phone" class="form-control" value="{{ $invoice_master->contact_person_phone }}">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Custom Notes</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bx-receipt"></span> </div>
+                                            <input type="text" name="custom_notes" id="custom_notes" class="form-control" value="{{ $invoice_master->custom_notes }}">
+                                        </div> 
+                                    </div> 
+                                </div>
                                
                                 
                               
@@ -134,8 +171,8 @@
                                             <th class="text-center" width="150">Unit Weight</th> 
                                             <th class="text-center" width="150">Qty</th> 
                                             <th class="text-center" width="150">Total Weight</th> 
-                                            <th class="text-center" width="150">Unit Price</th> 
-                                            <th class="text-center" width="150">Total Price</th> 
+                                            <th class="text-center d-none" width="150">Unit Price</th> 
+                                            <th class="text-center d-none" width="150">Total Price</th> 
                                             
                                 
                                             <th class="text-center" width="50"></th>
@@ -183,11 +220,11 @@
                                             <td>
                                                 <input type="number" name="net_weight[]"  value="{{ $detail->net_weight }}" step="0.0001" class="form-control item-net-weight" readonly>  
                                             </td>
-                                            <td>
+                                            <td class="d-none">
                                                 <input type="number" name="per_unit_price[]" value="{{ $detail->per_unit_price }}" step="0.01" class="form-control item-per-unit-price"  autocomplete="off">  
 
                                             </td>
-                                            <td>
+                                            <td class="d-none">
                                                 <input type="number" name="total_price[]"  value="{{ $detail->total_price }}" step="0.0001" class="form-control item-total-price" readonly>  
                                             </td>
                                             
@@ -206,7 +243,7 @@
                             </div> 
                            
 
-                            <div class="row mt-3">
+                            <div class="row mt-3 d-none">
                                 <div class="col-md-8">
 
                                     <label for="form-label">Descripion</label>
@@ -283,6 +320,51 @@
     </script>
 
 <script>  
+
+$(document).ready(function () {
+        $('#party_id').on('select2:select', function(e){
+            e.preventDefault();
+
+            let party_id = $(this).find('option:selected').val();
+
+            var warehouseDropdown = $('#party_warehouse_id');
+            
+            $.ajax({
+                url: `{{ route('party-warehouse.fetchList','') }}/${party_id}`,
+                type: 'GET',
+                beforeSend: function() {
+                    warehouseDropdown.append('<option value="">Loading...</option>');
+                },
+                success: function(data) {
+                    warehouseDropdown.empty(); // Clear current options
+                    console.log(data);
+
+                    warehouseDropdown.append('<option selected value="">Choose...</option>');
+                    
+                    // Check if data is empty
+                    if (data.length === 0) {
+                        warehouseDropdown.append('<option disabled>No records found</option>');
+                    } else {
+                        // Append the new items
+                        $.each(data, function(index, warehouse) {
+                            warehouseDropdown.append(new Option(warehouse.name, warehouse.id));
+                        });
+                    }
+
+                    // Close the dropdown
+                    warehouseDropdown.select2('close');
+                    // Notify select2 about the change
+                    warehouseDropdown.trigger('change');
+                    warehouseDropdown.select2('open');
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                    alert('Failed to load items. Please try again.'); // Optional user feedback
+                }
+            });
+            
+        });
+    });
 
 
        //  Detect Enter key in input fields
@@ -418,10 +500,10 @@
             <td>
                 <input type="number" name="net_weight[]" step="0.0001" class="form-control item-net-weight" readonly>  
             </td>
-            <td>
+            <td class="d-none">
                 <input type="number" name="per_unit_price[]" step="0.0001" class="form-control item-per-unit-price">  
             </td>
-            <td>
+            <td class="d-none">
                 <input type="number" name="total_price[]" step="0.0001" class="form-control item-total-price" readonly>  
             </td>
             
