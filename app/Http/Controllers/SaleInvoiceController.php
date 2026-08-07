@@ -125,7 +125,10 @@ class SaleInvoiceController extends Controller
     public function createFromSaleOrder($id)
     {
 
-        $saleOrder = InvoiceMaster::with('invoiceDetails')->find($id);
+        $saleOrder = InvoiceMaster::with(['invoiceDetails' => function ($query) {
+                $query->where('balance_quantity', '>', 0);
+            }])->find($id);
+
         $newInvoiceNo = InvoiceMaster::generateInvoiceNo('INV','invoice');
         $partyWarehouses = PartyWarehouse::where('party_id',$saleOrder->party_id)->get();
         $itemGoods = DB::table('v_finished_goods_stock_report')->get();
@@ -560,7 +563,8 @@ class SaleInvoiceController extends Controller
         DB::beginTransaction();// Start a transaction
 
         try {
-
+            $invoiceMaster = InvoiceMaster::find($id);
+            
             DB::table('invoice_detail')->where('invoice_master_id', $id)->delete();
             DB::table('journals')->where('invoice_master_id', $id)->delete();
 
