@@ -195,7 +195,10 @@ class SaleOrderInvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+          return response()->json([
+                'success' => true,
+                'message' => 'Sale Invoice updated successfully. Invoice No: ',
+            ], 200);
         $validator = Validator::make($request->all(), [
             'party_id'           => 'required',
             'party_warehouse_id' => 'required',

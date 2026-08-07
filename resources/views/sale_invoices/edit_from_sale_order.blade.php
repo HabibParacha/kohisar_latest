@@ -37,9 +37,12 @@
             <div class="container-fluid">
 
                 {{-- Route: PUT  sale-order-invoice/{id} → SaleOrderInvoiceController::update --}}
-                <form id="sale-order-invoice-update" action="{{ route('sale-order-invoice.update', $invoice->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="sale-order-invoice-update"
+                        action="{{ route('sale-order-invoice.update', $invoice->id) }}"
+                        method="POST"
+                        enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
+                        <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="id" id="invoice_master_id" value="{{ $invoice->id }}">
 
 
@@ -437,39 +440,40 @@
 </script>
 
 <script>
-    $('#sale-order-invoice-update').on('submit', function (e) {
-        e.preventDefault();
-        var submit_btn = $('#submit-sale-order-invoice-update');
-        let formData   = new FormData(this);
-        var invoice_master_id = $('#invoice_master_id').val();
+    $(document).ready(function () {
+        $('#sale-order-invoice-update').on('submit', function (e) {
+            e.preventDefault();
+            var $form      = $(this);
+            var submit_btn = $('#submit-sale-order-invoice-update');
+            var formData   = new FormData(this);
 
-        $.ajax({
-            type: 'POST',   // Laravel spoofs PUT via @method('PUT')
-            url: "{{ route('sale-order-invoice.update',':id') }}".replace(':id',invoice_master_id),
-            dataType: 'json',
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: formData,
-            enctype: 'multipart/form-data',
-            beforeSend: function () {
-                submit_btn.prop('disabled', true).html('Processing');
-            },
-            success: function (response) {
-                submit_btn.prop('disabled', false).html('Update');
-                if (response.success == true) {
-                    notyf.success({ message: response.message, duration: 3000 });
-                    setTimeout(function () {
-                        window.location.href = '{{ route("sale-invoice.index") }}';
-                    }, 300);
-                } else {
-                    notyf.error({ message: response.message, duration: 5000 });
+            $.ajax({
+                type: 'POST',   // _method=PUT in FormData spoofs as PUT for Laravel
+                url: $form.attr('action'),  // reads the Blade-rendered route directly
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                data: formData,
+                beforeSend: function () {
+                    submit_btn.prop('disabled', true).html('Processing');
+                },
+                success: function (response) {
+                    submit_btn.prop('disabled', false).html('Update');
+                    if (response.success == true) {
+                        notyf.success({ message: response.message, duration: 3000 });
+                        setTimeout(function () {
+                            window.location.href = '{{ route("sale-invoice.index") }}';
+                        }, 300);
+                    } else {
+                        notyf.error({ message: response.message, duration: 5000 });
+                    }
+                },
+                error: function (e) {
+                    submit_btn.prop('disabled', false).html('Update');
+                    notyf.error({ message: e.responseJSON.message, duration: 5000 });
                 }
-            },
-            error: function (e) {
-                submit_btn.prop('disabled', false).html('Update');
-                notyf.error({ message: e.responseJSON.message, duration: 5000 });
-            }
+            });
         });
     });
 </script>
