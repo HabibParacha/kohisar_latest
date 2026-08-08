@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('recipe', RecipeController::class);
 
     Route::get('purchase-order/test/create', [PurchaseOrderController::class,'createTest'])->name('purcahse-order.createTest');//********************** */
+    Route::get('purchase-order/receiving-bill/print/{id}',[PurchaseOrderController::class,'printReceivingBill'])->name('purchase-order.receiving-bill.print');
     Route::resource('purchase-order', PurchaseOrderController::class);
 
     Route::resource('sale-order', SaleOrderController::class);

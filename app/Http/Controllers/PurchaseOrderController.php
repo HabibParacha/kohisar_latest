@@ -70,6 +70,11 @@ class PurchaseOrderController extends Controller
                                                 <i class="bx bx-pencil font-size-16 text-secondary me-1"></i> Edit
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="'.route('purchase-order.receiving-bill.print',$row->id) . '" class="dropdown-item">
+                                                <i class="bx bx-printer font-size-16 text-secondary me-1"></i> Receving Bill
+                                            </a>
+                                        </li>
                                          <li>
                                             <a href="javascript:void(0)" onclick="deletePurchaseOrder(' . $row->id . ')" class="dropdown-item">
                                                 <i class="bx bx-trash font-size-16 text-danger me-1"></i> Delete
@@ -916,6 +921,29 @@ class PurchaseOrderController extends Controller
 
 
         
+    }
+
+
+    public function printReceivingBill($id)
+    {
+        try{
+            $data = InvoiceMaster::with(['party','invoiceDetails'])->where('id', $id)->first();
+
+            $bag = InvoiceDetail::where('invoice_master_id', $id)
+            ->where('type', 'output')
+            ->first();
+           
+
+            if (!$data) {
+                return back()->with('flash-danger', 'Record not found.');
+            }
+          
+            return view('purchase_orders.print_receving_bill',compact('data','bag'));
+
+        }catch (\Exception $e){
+            dd($e);
+            return back()->with('flash-danger', $e->getMessage());
+        }
     }
 
 
