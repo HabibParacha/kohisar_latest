@@ -148,11 +148,14 @@ class SaleOrderInvoiceController extends Controller
             // Sync sold / balance quantities on the parent sale order
             $this->syncOrderBalance($request->input('sale_order_id'));
 
+
+
             DB::commit();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Sale Invoice created successfully. Invoice No: ' . $newInvoiceNo,
+                'id' => $invoiceMasterId
             ], 200);
 
         } catch (\Exception $e) {

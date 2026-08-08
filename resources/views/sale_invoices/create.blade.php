@@ -98,13 +98,7 @@
                                         </div> 
                                     </div> 
                                 </div>
-
-
-                              
-                               
-                                
-                               
-                             
+            
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label class="form-label">Date</label>
@@ -131,6 +125,33 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><span class="bx bxs-spreadsheet" ></span> </div>
                                             <input type="text" name="reference_no"class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-user-check" ></span> </div>
+                                            <input type="text" name="contact_person"class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-phone" ></span> </div>
+                                            <input type="text" name="contact_person_phone"class="form-control">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-3">
+                                        <label class="form-label">Custom Notes</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-note" ></span> </div>
+                                            <input type="text" name="custom_notes"class="form-control">
                                         </div> 
                                     </div> 
                                 </div>
@@ -380,9 +401,11 @@
                         duration: 3000
                     });
 
+                    var invoiceId = response.id;
+
                     // Redirect after success notification
                     setTimeout(function() {
-                        window.location.href = '{{ route("sale-invoice.index") }}';
+                        window.location.href = '{{ route("sale-invoice.printGatePass", "invoiceId") }}'.replace('invoiceId', invoiceId);
                     }, 200); // Redirect after 3 seconds (same as notification duration)
 
 

@@ -569,10 +569,14 @@
                         duration: 3000
                     });
 
-                    // Redirect after success notification
-                    setTimeout(function() {
-                        window.location.href = '{{ route("sale-invoice.index") }}';
-                    }, 200); // Redirect after 3 seconds (same as notification duration)
+                   var invoiceId = response.id;
+
+                    setTimeout(function () {
+                        var url = '{{ route("sale-invoice.printGatePass", ":id") }}';
+                        url = url.replace(':id', invoiceId);
+
+                        window.location.href = url;
+                    }, 200);
 
 
                 }else{

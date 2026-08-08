@@ -109,9 +109,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sale-order', SaleOrderController::class);
 
     Route::get('sale-invoice/gate-pass/{id}', [SaleInvoiceController::class, 'printGatePass'])->name('sale-invoice.printGatePass');
+    Route::resource('sale-invoice', SaleInvoiceController::class);    // Sale invoices created directly (no sale order)
 
-    // Sale invoices created directly (no sale order)
-    Route::resource('sale-invoice', SaleInvoiceController::class);
 
     // Sale invoices created from a sale order — handled by a dedicated controller
     // so that edit/delete always keep the order balance in sync

@@ -222,11 +222,12 @@ class SaleInvoiceController extends Controller
                 'grand_total' => $request->input('grand_total'),
                 'total_purchase_price' => $request->input('grand_total_purchase_price'),
                 'profit_loss' => $request->input('grand_total') - $request->input('grand_total_purchase_price'),
-            
-            
                 'description' => $request->input('description'),
-
                 'created_by' => Auth::user()->id,
+
+                'contact_person'       => $request->input('contact_person'),
+                'contact_person_phone' => $request->input('contact_person_phone'),
+                'custom_notes'         => $request->input('custom_notes'),
           ];
 
           
@@ -298,6 +299,7 @@ class SaleInvoiceController extends Controller
           return response()->json([
               'success' => true,
               'message' => 'Sale Order added successfully. New Receipt No: '.$newInvoiceNo,
+              'id' => $invoice_master_id,
           ],200);
       
 
@@ -440,6 +442,10 @@ class SaleInvoiceController extends Controller
             'description' => $request->input('description'),
 
             'updated_by' => Auth::user()->id,
+
+            'contact_person'       => $request->input('contact_person'),
+                'contact_person_phone' => $request->input('contact_person_phone'),
+                'custom_notes'         => $request->input('custom_notes'),
         ];
 
           

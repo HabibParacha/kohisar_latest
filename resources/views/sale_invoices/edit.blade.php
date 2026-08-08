@@ -139,6 +139,33 @@
                                         </div> 
                                     </div> 
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Person</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-user-check" ></span> </div>
+                                            <input type="text" name="contact_person" class="form-control" value="{{ $invoice_master->contact_person }}">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-phone" ></span> </div>
+                                            <input type="text" name="contact_person_phone" class="form-control" value="{{ $invoice_master->contact_person_phone }}">
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="mb-3">
+                                        <label class="form-label">Custom Notes</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><span class="bx bxs-note" ></span> </div>
+                                            <input type="text" name="custom_notes" class="form-control" value="{{ $invoice_master->custom_notes }}">
+                                        </div> 
+                                    </div> 
+                                </div>
                                
                                 
                               

@@ -52,6 +52,16 @@
                                 </address>
                             </div>
                         </div>
+                         <div class="row">
+                            <div class="col-sm-6 mt-3">
+                                <address>
+                                    <h5>Contact Person:</h5>
+                                    <span class="fw-bold">Contact Person: </span>  {{ $saleInvoice->contact_person }}<br>
+                                   <span class="fw-bold">Contact Person Phone: </span> {{ $saleInvoice->contact_person_phone }}<br>
+                                   <span class="fw-bold">Custom Notes: </span> {{ $saleInvoice->custom_notes }}<br>
+                                </address>
+                            </div>
+                        </div>
                         {{-- <div class="row">
                             <div class="col-sm-6 mt-3">
                                 <address>
