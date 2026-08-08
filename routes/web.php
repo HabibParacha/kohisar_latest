@@ -8,6 +8,7 @@ use App\Http\Controllers\BalanceSheetController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChartOfAccountController;
+use App\Http\Controllers\ContractSettingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FinishedGoodsStockController;
@@ -145,6 +146,14 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('finished-goods-stock', FinishedGoodsStockController::class);
+
+
+    Route::resource('contract-settings', ContractSettingController::class);
+
+
+
+
+
 
     // START::Account Section 
         Route::get('account-reports/request', [AccountReportsController::class, 'request'])->name('account-reports.request');
