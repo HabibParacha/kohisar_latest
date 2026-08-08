@@ -98,6 +98,10 @@ class SaleOrderInvoiceController extends Controller
                 'profit_loss'          => $request->input('grand_total') - $request->input('grand_total_purchase_price'),
                 'description'          => $request->input('description'),
                 'created_by'           => Auth::id(),
+
+                'contact_person'       => $request->input('contact_person'),
+                'contact_person_phone' => $request->input('contact_person_phone'),
+                'custom_notes'         => $request->input('custom_notes'),
             ];
 
             if ($request->hasFile('attachment')) {
@@ -195,10 +199,6 @@ class SaleOrderInvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-          return response()->json([
-                'success' => true,
-                'message' => 'Sale Invoice updated successfully. Invoice No: ',
-            ], 200);
         $validator = Validator::make($request->all(), [
             'party_id'           => 'required',
             'party_warehouse_id' => 'required',
@@ -247,6 +247,9 @@ class SaleOrderInvoiceController extends Controller
                 'profit_loss'          => $request->input('grand_total') - $request->input('grand_total_purchase_price'),
                 'description'          => $request->input('description'),
                 'updated_by'           => Auth::id(),
+                'contact_person'       => $request->input('contact_person'),
+                'contact_person_phone' => $request->input('contact_person_phone'),
+                'custom_notes'         => $request->input('custom_notes'),
             ]);
 
             if ($request->hasFile('attachment')) {

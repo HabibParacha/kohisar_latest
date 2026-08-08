@@ -108,6 +108,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('sale-order', SaleOrderController::class);
 
+    Route::get('sale-invoice/gate-pass/{id}', [SaleInvoiceController::class, 'printGatePass'])->name('sale-invoice.printGatePass');
+
     // Sale invoices created directly (no sale order)
     Route::resource('sale-invoice', SaleInvoiceController::class);
 

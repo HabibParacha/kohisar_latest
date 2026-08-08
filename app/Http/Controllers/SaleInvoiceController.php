@@ -36,8 +36,7 @@ class SaleInvoiceController extends Controller
             if ($request->ajax()) {
                 $data = InvoiceMaster::with(['party', 'saleman', 'partyWarehouse'])->where('type','invoice')
                 ->orderBy('date','desc')
-                ->orderBy('id','desc')
-                ->get();
+                ->orderBy('id','desc');
     
                 return Datatables::of($data)
                     ->addIndexColumn()
@@ -66,6 +65,8 @@ class SaleInvoiceController extends Controller
                             ? "deleteSaleOrderInvoice({$row->id})"
                             : "deleteSaleInvoice({$row->id})";
 
+                        $gatePassRoute = route('sale-invoice.printGatePass', $row->id);
+
                         $btn = '
                             <div class="d-flex align-items-center col-actions">
                                 <div class="dropdown">
@@ -81,6 +82,11 @@ class SaleInvoiceController extends Controller
                                          <li>
                                             <a href="'. $editRoute .'" class="dropdown-item">
                                                 <i class="bx bx-pencil font-size-16 text-warning me-1"></i> Edit
+                                            </a>
+                                        </li>
+                                         <li>
+                                            <a href="'. $gatePassRoute .'" class="dropdown-item">
+                                                <i class="bx bx-printer font-size-16 text-info me-1"></i> Gate Pass
                                             </a>
                                         </li>
                                          
@@ -879,5 +885,24 @@ class SaleInvoiceController extends Controller
         // Lock the sale order once at least one invoice has been raised against it
         $saleOrder->is_lock = 1;
         $saleOrder->save();
+    }
+
+    public function printGatePass($id)
+    {
+        try {
+            $invoice = InvoiceMaster::with([
+                'party',
+                'partyWarehouse',
+                'invoiceDetails.item'
+            ])->find($id);
+
+            if (!$invoice) {
+                return back()->with('error', 'Invoice not found.');
+            }
+
+            return view('sale_invoices.gate_pass', compact('invoice'));
+        } catch (\Exception $e) {
+            return back()->with('flash-danger', $e->getMessage());
+        }
     }
 }
