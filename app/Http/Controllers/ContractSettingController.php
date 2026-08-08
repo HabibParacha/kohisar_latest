@@ -12,7 +12,7 @@ class ContractSettingController extends Controller
 
     public function index()
     {
-        $settings = ContractSetting::with(['coaPayable', 'coaExpenseDr', 'coaExpenseCr'])->get();
+        $settings = ContractSetting::with(['coaExpenseDr', 'coaPayableCr'])->get();
 
         return view('contract_settings.index', compact('settings'));
     }
@@ -31,9 +31,8 @@ class ContractSettingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'coa_payable_id'    => 'required|exists:chart_of_accounts,id',
             'coa_expense_dr_id' => 'required|exists:chart_of_accounts,id',
-            'coa_expense_cr_id' => 'required|exists:chart_of_accounts,id',
+            'coa_payable_cr_id' => 'required|exists:chart_of_accounts,id',
             'unloading'         => 'required|numeric|min:0',
             'loading'           => 'required|numeric|min:0',
             'bag_cutting'       => 'required|numeric|min:0',
@@ -44,9 +43,8 @@ class ContractSettingController extends Controller
         ]);
 
         ContractSetting::create($request->only([
-            'coa_payable_id',
             'coa_expense_dr_id',
-            'coa_expense_cr_id',
+            'coa_payable_cr_id',
             'unloading',
             'loading',
             'bag_cutting',
@@ -81,9 +79,8 @@ class ContractSettingController extends Controller
     public function update(Request $request, ContractSetting $contractSetting)
     {
         $request->validate([
-            'coa_payable_id'    => 'required|exists:chart_of_accounts,id',
             'coa_expense_dr_id' => 'required|exists:chart_of_accounts,id',
-            'coa_expense_cr_id' => 'required|exists:chart_of_accounts,id',
+            'coa_payable_cr_id' => 'required|exists:chart_of_accounts,id',
             'unloading'         => 'required|numeric|min:0',
             'loading'           => 'required|numeric|min:0',
             'bag_cutting'       => 'required|numeric|min:0',
@@ -94,7 +91,6 @@ class ContractSettingController extends Controller
         ]);
 
         $contractSetting->update($request->only([
-            'coa_payable_id',
             'coa_expense_dr_id',
             'coa_expense_cr_id',
             'unloading',

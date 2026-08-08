@@ -37,9 +37,8 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>COA Payable</th>
-                                            <th>COA Expense DR</th>
-                                            <th>COA Expense CR</th>
+                                            <th>Expense Acc</th>
+                                            <th>Contractor Payable</th>
                                             <th class="text-end">Unloading</th>
                                             <th class="text-end">Loading</th>
                                             <th class="text-end">Bag Cutting</th>
@@ -54,9 +53,8 @@
                                         @foreach($settings as $setting)
                                         <tr>
                                             <td>{{ $setting->id }}</td>
-                                            <td>{{ $setting->coaPayable->name ?? '-' }}</td>
                                             <td>{{ $setting->coaExpenseDr->name ?? '-' }}</td>
-                                            <td>{{ $setting->coaExpenseCr->name ?? '-' }}</td>
+                                            <td>{{ $setting->coaPayableCr->name ?? '-' }}</td>
                                             <td class="text-end">{{ number_format($setting->unloading, 2) }}</td>
                                             <td class="text-end">{{ number_format($setting->loading, 2) }}</td>
                                             <td class="text-end">{{ number_format($setting->bag_cutting, 2) }}</td>

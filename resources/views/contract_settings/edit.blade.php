@@ -42,25 +42,9 @@
                     <div class="card-body">
                         <h5 class="card-title mb-4">Chart of Accounts</h5>
                         <div class="row">
-
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label class="form-label">COA Payable <span class="text-danger">*</span></label>
-                                    <select name="coa_payable_id" id="coa_payable_id" class="form-control select2" style="width:100%" required>
-                                        <option value="">-- Select Account --</option>
-                                        @foreach($chartOfAccounts as $coa)
-                                            <option value="{{ $coa->id }}"
-                                                {{ old('coa_payable_id', $contractSetting->coa_payable_id) == $coa->id ? 'selected' : '' }}>
-                                                {{ $coa->id }} - {{ $coa->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label class="form-label">COA Expense DR <span class="text-danger">*</span></label>
+                                    <label class="form-label">Expense Account (DR) <span class="text-danger">*</span></label>
                                     <select name="coa_expense_dr_id" id="coa_expense_dr_id" class="form-control select2" style="width:100%" required>
                                         <option value="">-- Select Account --</option>
                                         @foreach($chartOfAccounts as $coa)
@@ -75,12 +59,12 @@
 
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label class="form-label">COA Expense CR <span class="text-danger">*</span></label>
-                                    <select name="coa_expense_cr_id" id="coa_expense_cr_id" class="form-control select2" style="width:100%" required>
+                                    <label class="form-label">Contractor payable (CR) <span class="text-danger">*</span></label>
+                                    <select name="coa_payable_cr_id" id="coa_payable_cr_id" class="form-control select2" style="width:100%" required>
                                         <option value="">-- Select Account --</option>
                                         @foreach($chartOfAccounts as $coa)
                                             <option value="{{ $coa->id }}"
-                                                {{ old('coa_expense_cr_id', $contractSetting->coa_expense_cr_id) == $coa->id ? 'selected' : '' }}>
+                                                {{ old('coa_payable_cr_id', $contractSetting->coa_payable_cr_id) == $coa->id ? 'selected' : '' }}>
                                                 {{ $coa->id }} - {{ $coa->name }}
                                             </option>
                                         @endforeach

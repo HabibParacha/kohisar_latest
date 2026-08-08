@@ -26,6 +26,20 @@
 
                     </ul>
                 </li>
+
+                 <li class="">
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-cog"></i>
+                        <span key="t-ecommerce">labour Contract</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                      
+
+                        <li> <a href="{{ route('contract-settings.index') }}" key="t-products">Contract Settings</a></li>
+                        <li> <a href="{{ route('contract-voucher.index') }}" key="t-products">Contract Vouchers</a></li>
+
+                    </ul>
+                </li>
               
                 <li>
                     <a href="{{route('purchase-order.index')}}" class="waves-effect">
@@ -125,10 +139,9 @@
                         <li> <a href="{{ route('user.index') }}" key="t-products">Users</a></li>
                         <li> <a href="{{ route('tax.index') }}" key="t-products">Taxes</a></li>
                         {{-- <li> <a href="{{ route('role-permissions.index') }}" key="t-products">Roles Permissions</a></li> --}}
-                        <li> <a href="{{ route('contract-settings.index') }}" key="t-products">Contract Settings</a></li>
-
                     </ul>
                 </li>
+               
 
                 <li class="">
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

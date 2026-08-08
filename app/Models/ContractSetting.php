@@ -10,9 +10,8 @@ class ContractSetting extends Model
     use HasFactory;
 
     protected $fillable = [
-        'coa_payable_id',
         'coa_expense_dr_id',
-        'coa_expense_cr_id',
+        'coa_payable_cr_id',
         'unloading',
         'loading',
         'bag_cutting',
@@ -24,18 +23,14 @@ class ContractSetting extends Model
 
     // ── Relationships ────────────────────────────────────────────────────────────
 
-    public function coaPayable()
-    {
-        return $this->belongsTo(ChartOfAccount::class, 'coa_payable_id');
-    }
-
+   
     public function coaExpenseDr()
     {
         return $this->belongsTo(ChartOfAccount::class, 'coa_expense_dr_id');
     }
 
-    public function coaExpenseCr()
+    public function coaPayableCr()
     {
-        return $this->belongsTo(ChartOfAccount::class, 'coa_expense_cr_id');
+        return $this->belongsTo(ChartOfAccount::class, 'coa_payable_cr_id');
     }
 }

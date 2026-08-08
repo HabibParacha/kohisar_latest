@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('contract_settings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('coa_payable_id');
             $table->unsignedBigInteger('coa_expense_dr_id');
-            $table->unsignedBigInteger('coa_expense_cr_id');
+            $table->unsignedBigInteger('coa_payable_cr_id');
             $table->decimal('unloading',15,2)->default(0);
             $table->decimal('loading',15,2)->default(0);
             $table->decimal('bag_cutting',15,2)->default(0);

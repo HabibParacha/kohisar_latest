@@ -9,6 +9,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChartOfAccountController;
 use App\Http\Controllers\ContractSettingController;
+use App\Http\Controllers\ContractVoucherController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FinishedGoodsStockController;
@@ -149,6 +150,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::resource('contract-settings', ContractSettingController::class);
+    Route::resource('contract-voucher', ContractVoucherController::class)
+        ->only(['index', 'create', 'store', 'show', 'edit', 'update']);
+
 
 
 
