@@ -324,7 +324,7 @@ input[type=number]{
                 },
             });
         </script>
-        @if(Session::get('success'))
+        @if(Session::get('success-1'))
             <script>
                 notyf.error("Your Are Not Authorized Please Contact Admin");
             </script>

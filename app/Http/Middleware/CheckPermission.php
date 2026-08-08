@@ -37,7 +37,7 @@ class CheckPermission
             // abort(403, 'Unauthorized action.');
             // return view('403');
              // Return a JSON response with a success message
-            return redirect()->back()->with('success','Your Are Not Authorized Please Contact Admin');
+            return redirect()->back()->with('success-1','Your Are Not Authorized Please Contact Admin');
         }
 
         
