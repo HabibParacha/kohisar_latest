@@ -24,12 +24,12 @@
     <div class="top-info">
         <div class="field">
             <span>Voucher No.</span>
-            <div class="line" contenteditable="true">{{ $invoice->invoice_no ?? '' }}</div>
+            <div class="line" contenteditable="true" s  tyle="text-align: center;">{{ $invoice->invoice_no ?? '' }}</div>
         </div>
         <div class="field">
             <span>Date</span>
-            <div class="line" contenteditable="true">
-                {{ isset($invoice->date) ? date('d/m/Y', strtotime($invoice->date)) : '' }}
+            <div class="line" contenteditable="true" style="text-align: center;">
+                {{ isset($invoice->date) ? date('d / m / Y', strtotime($invoice->date)) : '' }}
             </div>
         </div>
     </div>

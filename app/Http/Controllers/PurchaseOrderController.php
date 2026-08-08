@@ -284,6 +284,7 @@ class PurchaseOrderController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Purchase added successfully. New Receipt No: '.$newInvoiceNo,
+                'id' => $invoice_master_id,
             ],200);
         
 

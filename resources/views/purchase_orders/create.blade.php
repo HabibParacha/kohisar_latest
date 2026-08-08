@@ -482,9 +482,13 @@ $(document).ready(function () {
                         duration: 3000
                     });
 
+                    let id = response.id;
+
+                    
+
                     // Redirect after success notification
                     setTimeout(function() {
-                        window.location.href = '{{ route("purchase-order.index") }}';
+                        window.location.href = '{{ route("purchase-order.receiving-bill.print", ":id") }}'.replace(':id', id);
                     }, 200); // Redirect after 3 seconds (same as notification duration)
 
 
