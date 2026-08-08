@@ -34,8 +34,7 @@ class PurchaseOrderController extends Controller
             if ($request->ajax()) {
                 $data = InvoiceMaster::where('type','receipt')
                 ->orderBy('date','desc')
-                ->orderBy('reference_no','desc')
-                ->get();
+                ->orderBy('reference_no','desc');
     
                 return Datatables::of($data)
                     ->addIndexColumn()
