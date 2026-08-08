@@ -51,4 +51,28 @@ class SurplusBagsReportController extends Controller
 
 
     }
+
+    public function historyRequest()
+    {
+        return view('reports.surplus_bags_history.request');
+    }
+
+    public function historyShow(Request $request)
+    {
+        
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+
+        $data = InvoiceDetail::with('item')
+        ->where('type', 'output')
+        ->where('is_surplus', 1)
+         ->whereBetween('date', [
+            $request->startDate,
+            $request->endDate
+        ])
+        ->get();
+
+
+        return view('reports.surplus_bags_history.show',compact('data'));
+    }
 }

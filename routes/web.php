@@ -215,6 +215,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/surplus-bags-cummulative-production/show', [SurplusBagsReportController::class, 'cummulativeProductionShow'])
     ->name('surplus-bags-report.cummulativeProductionShow');
 
+    Route::get('/surplus-bags-history/request', [SurplusBagsReportController::class, 'historyRequest'])
+    ->name('surplus-bags-report.historyRequest');
+    Route::get('/surplus-bags-history/show', [SurplusBagsReportController::class, 'historyShow'])
+    ->name('surplus-bags-report.historyShow');
+
 });
 
 Route::post('test',[TestController::class, 'test']);
