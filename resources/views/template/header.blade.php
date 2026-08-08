@@ -70,7 +70,7 @@
                                 <a class="dropdown-item" href="{{ route('partial-day-book-report.index') }}">Partial Day Book</a>
                                 <a class="dropdown-item" href="{{ route('sale-report.customerCummulativeSalesRequest') }}">Cust. Cumm. Sales</a>
                                 <a class="dropdown-item" href="{{ route('surplus-bags-report.cummulativeProductionRequest') }}">Surplus Bags Cumm. Production</a>
-                                <a class="dropdown-item" href="{{ route('surplus-bags-report.historyRequest') }}">Surplus Bags History</a>
+                                {{-- <a class="dropdown-item" href="{{ route('surplus-bags-report.historyRequest') }}">Surplus Bags History</a> --}}
 
                             </div>
                            
