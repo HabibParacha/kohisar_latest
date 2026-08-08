@@ -7,7 +7,8 @@
         $totalWeight = $receipt->invoiceDetails[0]->after_cut_total_weight;
         $totalPrice = $receipt->invoiceDetails[0]->total_price;
 
-        $rate = ($totalPrice / $totalWeight) * 40;
+        // $rate = ($totalPrice / $totalWeight) * 40;
+        $rate = $receipt->invoiceDetails[0]->per_unit_price;
     @endphp
     <tr>
         <td>{{ date('d-m-Y', strtotime($receipt->date)) }}</td>

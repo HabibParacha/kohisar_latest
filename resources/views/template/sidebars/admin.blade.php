@@ -36,7 +36,7 @@
                       
 
                         <li> <a href="{{ route('contract-settings.index') }}" key="t-products">Contract Settings</a></li>
-                        <li> <a href="{{ route('contract-voucher.index') }}" key="t-products">Contract Vouchers</a></li>
+                        {{-- <li> <a href="{{ route('contract-voucher.index') }}" key="t-products">Contract Vouchers</a></li> --}}
 
                     </ul>
                 </li>

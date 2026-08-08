@@ -61,6 +61,41 @@
                                 </div>
                             </div>
                         </div>
+                    </div> 
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="mini-stats-wid card">
+                            <div class="card-body">
+                               <table class="table">
+                                   <tr>
+                                        <th class="text-start">Name</th>
+                                        <th class="text-center">Previous</th>
+                                        <th class="text-center">Today</th>
+                                        <th class="text-center">Total</th>
+                                   </tr>
+                                   @foreach($prendingOrders as $row)
+                                        <tr>
+                                            <td class="text-start">{{ $row['name'] }}</td>
+                                            <td class="text-center">{{ $row['previous'] }}</td>
+                                            <td class="text-center">{{ $row['today'] }}</td>
+                                            <td class="text-center">{{ $row['total'] }}</td>
+                                        </tr>
+                                   @endforeach
+
+                                   <tr>
+                                        <th class="text-start">Total</th>
+                                        <th class="text-center">{{ $prendingOrders->sum('previous') }}</th>
+                                        <th class="text-center">{{ $prendingOrders->sum('today') }}</th>
+                                        <th class="text-center">{{ $prendingOrders->sum('total') }}</th>
+                                   </tr>
+                                        
+                               </table>
+                            </div>
+                        </div>
                     </div>
                     {{-- <div class="col-md-3">
                         <div class="mini-stats-wid card">
