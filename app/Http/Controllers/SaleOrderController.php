@@ -36,6 +36,7 @@ class SaleOrderController extends Controller
         try{
             if ($request->ajax()) {
                 $data = InvoiceMaster::where('type', 'sale_order')
+                ->with(['party','partyWarehouse'])
                 ->when(Auth::user()->type == "saleman", function ($query) {
                     return $query->where('saleman_id', Auth::user()->id);
                 })
@@ -60,7 +61,10 @@ class SaleOrderController extends Controller
                     ->addColumn('date', function($row){
                         return date('d-m-Y', strtotime($row->date));
                     })
-                   
+                    ->addColumn('party_warehouse_name', function($row){
+                        return ($row->partyWarehouse) ? $row->partyWarehouse->name : 'N/A';
+                    })
+                       
 
                     ->addColumn('action', function ($row) {
                         $btn = '

@@ -68,6 +68,12 @@
                     </div>
                     
                     <div class="col-md-6">
+                        <div class="card-header">
+                            <strong class="text-dark bg-light">
+                               Pending Sales Order 
+                            </strong>
+                        </div>
+                        
                         <div class="mini-stats-wid card">
                             <div class="card-body">
                                <table class="table">

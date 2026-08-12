@@ -100,7 +100,7 @@
             <div class="b-line" contenteditable="true">{{ $bag->item->name ?? '' }}</div>
         </div>
         <div class="b-field">
-            <span>Sale Operator:</span>
+            <span>Scale Operator:</span>
             <div class="b-line" contenteditable="true">{{ $invoice->sale_operator ?? '' }}</div>
         </div>
     </div>

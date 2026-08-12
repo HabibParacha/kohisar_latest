@@ -91,6 +91,7 @@
                                             <th>Date</th>
                                             <th>Receipt No</th>
                                             <th>Customer Name</th>
+                                            <th>Customer Warehouse</th>
                                             <th>Saleman Name</th>
                                            
                                             <th>Action</th>
@@ -157,6 +158,7 @@
                     { data: 'date' },
                     { data: 'invoice_no' },
                     { data: 'party_business_name' },
+                    { data: 'party_warehouse_name' },
                     { data: 'saleman_name' },
                    
                     { data: 'action', orderable: false, searchable: false },
