@@ -26,7 +26,7 @@ class RecipeController extends Controller
             if ($request->ajax()) {
 
 
-                $query = Recipe::orderBy('id', 'desc');
+                $query = Recipe::orderBy('id', 'desc')->get();
 
                 if ($request->has('is_active') && $request->is_active != null) {
                     $query->where('is_active', $request->is_active);

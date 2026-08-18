@@ -36,7 +36,8 @@ class SaleInvoiceController extends Controller
             if ($request->ajax()) {
                 $data = InvoiceMaster::with(['party', 'saleman', 'partyWarehouse'])->where('type','invoice')
                 ->orderBy('date','desc')
-                ->orderBy('id','desc');
+                ->orderBy('id','desc')
+                 ->get();
     
                 return Datatables::of($data)
                     ->addIndexColumn()
