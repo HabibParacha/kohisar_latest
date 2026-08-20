@@ -138,7 +138,7 @@ class ContractVoucherController extends Controller
         if (!Auth::user()->is_super_admin) {
             abort(403, 'Only administrators can edit contract vouchers.');
         }
-
+    
         $setting = ContractSetting::latest()->first();
 
         return view('contract_vouchers.edit', compact('contractVoucher', 'setting'));

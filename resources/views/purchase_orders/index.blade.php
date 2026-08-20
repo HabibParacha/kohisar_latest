@@ -120,7 +120,7 @@
                 serverSide: true,
                 ajax: "{{ route('purchase-order.index') }}",
                 columns: [
-                    { data: 'id' },
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'date' },
                     { data: 'invoice_no' },
                     { data: 'reference_no' },

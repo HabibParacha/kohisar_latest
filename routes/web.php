@@ -222,7 +222,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::post('test',[TestController::class, 'test']);
+Route::get('test',[TestController::class, 'test']);
 
 
 

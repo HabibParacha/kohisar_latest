@@ -53,7 +53,7 @@
                                     <label class="form-label">Date <span class="text-danger">*</span></label>
                                     <input type="date" name="date" id="date"
                                            class="form-control @error('date') is-invalid @enderror"
-                                           value="{{ old('date', date('Y-m-d')) }}" required readonly>
+                                           value="{{ old('date', date('Y-m-d')) }}" required>
                                     @error('date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
