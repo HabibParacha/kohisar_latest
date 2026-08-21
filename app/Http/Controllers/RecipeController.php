@@ -26,7 +26,7 @@ class RecipeController extends Controller
             if ($request->ajax()) {
 
 
-                $query = Recipe::orderBy('id', 'desc')->get();
+                $query = Recipe::orderBy('id', 'desc');
 
                 if ($request->has('is_active') && $request->is_active != null) {
                     $query->where('is_active', $request->is_active);
@@ -101,7 +101,7 @@ class RecipeController extends Controller
             return view('recipes.index', compact('itemGoods'));
 
         }catch (\Exception $e){
-
+            dd($e);
             return back()->with('flash-danger', $e->getMessage());
         }
         

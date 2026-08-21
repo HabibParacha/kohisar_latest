@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Party;
-use App\Models\Journal;
-use Illuminate\Http\Request;
 use App\Models\ChartOfAccount;
+use App\Models\Journal;
+use App\Models\InvoiceDetail;
+use App\Models\Party;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class BalanceSheetController extends Controller
@@ -166,6 +168,75 @@ class BalanceSheetController extends Controller
                             ];
 
                             $sum_of_level_4 += $balance;
+                        }
+
+                        elseif($account->id == "113002")
+                        { 
+
+                            //wanda        
+                            $wanda = InvoiceDetail::whereHas('item.category', function ($query) {
+                                $query->where('id', 3);
+                            })
+                            ->whereDate('date', '<=', $date)
+                            ->selectRaw("
+                                COALESCE(SUM(CASE WHEN type = 'output' THEN total_price ELSE 0 END), 0) AS breeder_output,
+                                COALESCE(SUM(CASE WHEN type = 'invoice' THEN total_purchase_price ELSE 0 END), 0) AS breeder_invoices,
+                                COALESCE(SUM(CASE WHEN type = 'output' THEN total_price ELSE 0 END), 0)
+                                -
+                                COALESCE(SUM(CASE WHEN type = 'invoice' THEN total_purchase_price ELSE 0 END), 0)
+                                AS balance
+                            ")
+                            ->first();
+
+                            $thirdData['fourth'][] = [
+                                'name' => 'Wanda',
+                                'total_debit' => $wanda->balance,
+                                'total_credit' => 0,
+                                'balance' => $wanda->balance
+                            ];
+                            $sum_of_level_4 += $wanda->balance;
+
+                            //Feed
+                            $feed = InvoiceDetail::whereHas('item.category', function ($query) {
+                                $query->whereIn('id', [1,2,4]);
+                            })
+                            ->whereDate('date', '<=', $date)
+                            ->selectRaw("
+                                COALESCE(SUM(CASE WHEN type = 'output' THEN total_price ELSE 0 END), 0) AS breeder_output,
+                                COALESCE(SUM(CASE WHEN type = 'invoice' THEN total_purchase_price ELSE 0 END), 0) AS breeder_invoices,
+                                COALESCE(SUM(CASE WHEN type = 'output' THEN total_price ELSE 0 END), 0)
+                                -
+                                COALESCE(SUM(CASE WHEN type = 'invoice' THEN total_purchase_price ELSE 0 END), 0)
+                                AS balance
+                            ")
+                            ->first();
+
+                            $thirdData['fourth'][] = [
+                                'name' => 'Feed',
+                                'total_debit' => $feed->balance,
+                                'total_credit' => 0,
+                                'balance' => $feed->balance
+                            ];
+
+                            $sum_of_level_4 += $feed->balance;
+
+
+
+                            $totalDebit = Journal::where('chart_of_account_id', $account->id)->where('date','<=',$date)->sum('debit');
+                            $totalCredit = Journal::where('chart_of_account_id', $account->id)->where('date','<=',$date)->sum('credit');
+                            $balance = ($totalDebit - $totalCredit) - ($wanda->balance + $feed->balance);
+
+                           
+
+                            $thirdData['fourth'][] = [
+                                'name' => 'Others',
+                                'total_debit' => $balance,
+                                'total_credit' => 0,
+                                'balance' => $balance
+                            ];
+
+                            $sum_of_level_4 += $balance;
+                            
                         }
                         
                         else{
