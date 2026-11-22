@@ -79,6 +79,7 @@ They come from an earlier mistake. Always use this table to understand them.
 | Name in code         | What it actually is                 |
 |----------------------|-------------------------------------|
 | `PurchaseController` | Purchase Invoice / Receipt          |
+| `PurchaseOrderController` (views `purchase_orders/`, routes `purchase-order.*`) | Purchase Receipt / Invoice (saves `type = 'receipt'`, prefix `PR`) |
 
 Rules:
 - When I say "receipt" or "purchase invoice", I mean `PurchaseController`

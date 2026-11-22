@@ -50,6 +50,8 @@
 
                         @endif
 
+                        @include('partials.index_date_filter')
+
                         <div class="card">
 
                             <div class="card-body">
@@ -118,7 +120,14 @@
             var table = $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('purchase-order.index') }}",
+                ajax: {
+                    url: "{{ route('purchase-order.index') }}",
+                    data: function (d) {
+                        d.start_date = $('#start_date').val();
+                        d.end_date = $('#end_date').val();
+                    }
+                },
+                pageLength: 25,
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                     { data: 'date' },
@@ -134,6 +143,8 @@
                 ],
                 order: [[0, 'asc']], // Order by **date** column, not DT_RowIndex
             });
+
+            @include('partials.index_date_filter_js')
 
             $('#submit-purchase-order-destroy').click(function() {
                 let invoice_master_id = $(this).data('id');

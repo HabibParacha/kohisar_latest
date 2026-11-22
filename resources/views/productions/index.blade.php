@@ -36,7 +36,7 @@
                                                 <label class="form-label">Start Date</label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><span class="bx bx-calendar" ></span> </div>
-                                                    <input type="date" name="start_date" id="start_date" class="form-control" value="">
+                                                    <input type="date" name="start_date" id="start_date" class="form-control" value="{{ $defaultStartDate }}">
                                                 </div>
                                             
                                             </div> 
@@ -46,7 +46,7 @@
                                                 <label class="form-label">End Date</label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><span class="bx bx-calendar" ></span> </div>
-                                                    <input type="date" name="end_date" id="end_date" class="form-control" value="">
+                                                    <input type="date" name="end_date" id="end_date" class="form-control" value="{{ $defaultEndDate }}">
                                                 </div>
                                             
                                             </div> 
@@ -191,14 +191,15 @@
                     { data: 'action', orderable: false, searchable: false },
                 ],
                 order: [[0, 'desc']],
+                pageLength: 25,
             });
 
             $('#filter-btn').on('click', function(){
                 table.draw();
             });
             $('#reset-filter-btn').on('click', function(){
-                $('#start_date').val('');
-                $('#end_date').val('');
+                $('#start_date').val('{{ $defaultStartDate }}');
+                $('#end_date').val('{{ $defaultEndDate }}');
                 $('#recipe_id').val('').trigger('change');
                 table.draw();
             });
