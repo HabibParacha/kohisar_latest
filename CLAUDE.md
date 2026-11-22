@@ -70,3 +70,32 @@ After I confirm, append an entry to `docs/prompt-log.md`:
 
 Do not fix or rewrite my original message in the log. Keep it exactly
 as I wrote it so I can compare.
+
+## Naming Exceptions (Legacy Mistakes)
+
+Some names in this project don't match what the code actually does.
+They come from an earlier mistake. Always use this table to understand them.
+
+| Name in code         | What it actually is                 |
+|----------------------|-------------------------------------|
+| `PurchaseController` | Purchase Invoice / Receipt          |
+
+Rules:
+- When I say "receipt" or "purchase invoice", I mean `PurchaseController`
+  and its related files
+- Do NOT rename these files, classes, routes, or tables unless I ask
+- When creating new code, use the correct names, not the legacy ones
+
+### If you find a new mismatch
+If you find names that don't match each other, for example:
+- a controller and its views have different names
+- a model name doesn't match its table or what it does
+- a route name doesn't match its controller
+- a file name doesn't match what the code inside actually does
+
+Then:
+1. STOP and ask me before doing anything with it
+2. Tell me what you found, e.g. "`OrderController` uses views from
+   `views/sales/`. Is this intentional?"
+3. Do NOT guess what it means, and do NOT fix or rename it yourself
+4. After I explain, add a new row to the table above with my answer
