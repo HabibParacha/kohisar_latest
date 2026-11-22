@@ -166,6 +166,7 @@
 
         $(document).ready(function() {
             var table = $('#table').DataTable({
+                pageLength: 25,
                 processing: true,
                 serverSide: true,
                 ajax: {

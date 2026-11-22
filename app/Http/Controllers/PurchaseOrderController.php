@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
+use App\Support\DateRange;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -32,7 +33,9 @@ class PurchaseOrderController extends Controller
       
         try{
             if ($request->ajax()) {
-                $data = InvoiceMaster::where('type','receipt')
+                $data = InvoiceMaster::with('party')
+                ->where('type','receipt')
+                ->withinRequestDates($request, 60)
                 ->orderBy('date','desc')
                 ->orderBy('reference_no','desc')
                 ->get();
@@ -95,7 +98,9 @@ class PurchaseOrderController extends Controller
                     ->make(true);
             }
     
-            return view('purchase_orders.index');
+            [$defaultStartDate, $defaultEndDate] = DateRange::lastDays(60);
+
+            return view('purchase_orders.index', compact('defaultStartDate', 'defaultEndDate'));
 
         }catch (\Exception $e){
             dd($e);

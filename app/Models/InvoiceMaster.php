@@ -8,11 +8,13 @@ use App\Models\InvoiceDetail;
 use App\Models\PartyWarehouse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasDateRange;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class InvoiceMaster extends Model
 {
     use HasFactory;
+    use HasDateRange;
 
     protected $table = "invoice_master";
 

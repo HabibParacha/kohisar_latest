@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
 use App\Models\PartyWarehouse;
+use App\Support\DateRange;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -35,9 +36,10 @@ class SaleInvoiceController extends Controller
         try{
             if ($request->ajax()) {
                 $data = InvoiceMaster::with(['party', 'saleman', 'partyWarehouse'])->where('type','invoice')
+                ->withinRequestDates($request, 60)
                 ->orderBy('date','desc')
                 ->orderBy('id','desc')
-                 ->get();
+                ->get();
     
                 return Datatables::of($data)
                     ->addIndexColumn()
@@ -111,7 +113,9 @@ class SaleInvoiceController extends Controller
                     ->make(true);
             }
     
-            return view('sale_invoices.index');
+            [$defaultStartDate, $defaultEndDate] = DateRange::lastDays(60);
+
+            return view('sale_invoices.index', compact('defaultStartDate', 'defaultEndDate'));
 
         }catch (\Exception $e){
             dd($e);

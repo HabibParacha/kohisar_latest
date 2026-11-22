@@ -47,6 +47,8 @@
 
                         @endif
 
+                        @include('partials.index_date_filter')
+
                         <div class="card">
 
                             <div class="card-body">
@@ -115,7 +117,14 @@
             var table = $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('sale-invoice.index') }}",
+                ajax: {
+                    url: "{{ route('sale-invoice.index') }}",
+                    data: function (d) {
+                        d.start_date = $('#start_date').val();
+                        d.end_date = $('#end_date').val();
+                    }
+                },
+                pageLength: 25,
                 columns: [
                     { data: 'id' },
                     { data: 'date' },
@@ -130,6 +139,8 @@
                 ],
                 order: [[0, 'desc']],
             });
+
+            @include('partials.index_date_filter_js')
 
             // ── Unified delete handler ──────────────────────────────────────────────
             // 'route-type' data attribute is set by the helper functions below.

@@ -8,6 +8,7 @@ use App\Models\Recipe;
 use Illuminate\Http\Request;
 use App\Models\InvoiceDetail;
 use App\Models\InvoiceMaster;
+use App\Support\DateRange;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -29,18 +30,15 @@ class ProductionController extends Controller
         $recipes = Recipe::all();
         try{
             if ($request->ajax()) {
-                $query = InvoiceMaster::where('type', 'production')
+                $query = InvoiceMaster::with('recipe')
+                ->where('type', 'production')
+                ->withinRequestDates($request, 60)
                 ->orderBy('date', 'desc')
                 ->orderBy('id', 'desc');
 
                 if ($request->recipe_id) {
                     $query->where('recipe_id', $request->recipe_id );
                 }
-    
-                if ($request->start_date && $request->end_date) {
-                    $query->whereBetween('date', [$request->start_date, $request->end_date]);
-                }
-
 
                 $data = $query->get();
 
@@ -138,7 +136,9 @@ class ProductionController extends Controller
                     ->make(true);
             }
     
-            return view('productions.index', compact('recipes'));
+            [$defaultStartDate, $defaultEndDate] = DateRange::lastDays(60);
+
+            return view('productions.index', compact('recipes', 'defaultStartDate', 'defaultEndDate'));
 
         }catch (\Exception $e){
             dd($e);
